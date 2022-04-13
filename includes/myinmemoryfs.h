@@ -20,10 +20,10 @@ protected:
 
 public:
     static MyInMemoryFS *Instance();
-    file *log;
-    file all_files[NUM_DIR_ENTRIES];
 
-    // TODO: [PART 1] Add attributes of your file system here
+    MyFsFileInfo *files;
+    uint32_t *open_files;
+    int open_files_count = 0;
 
     MyInMemoryFS();
     ~MyInMemoryFS() override;
@@ -50,8 +50,10 @@ public:
 
     // TODO: Add methods of your file system here
 
-    uint16_t findIndex(const char *path);
-    uint findFreeSpot();
+    uint16_t get_index(const char *path);
+    uint16_t get_next_free_index();
+    uint16_t get_next_free_index_files();
+    uint16_t truncate(uint16_t file_index, off_t new_size);
 
 };
 

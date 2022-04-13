@@ -6,6 +6,28 @@
 
 #IncludeRegexTransform: 
 
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/blockdevice.cpp
+cstdlib
+-
+cassert
+-
+cstring
+-
+errno.h
+-
+fcntl.h
+-
+unistd.h
+-
+sys/stat.h
+-
+sys/types.h
+-
+macros.h
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/macros.h
+blockdevice.h
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/blockdevice.h
+
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myfs.cpp
 unistd.h
 -
