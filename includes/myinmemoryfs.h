@@ -20,11 +20,13 @@ protected:
 
 public:
     static MyInMemoryFS *Instance();
+    file *log;
+    file all_files[NUM_DIR_ENTRIES];
 
     // TODO: [PART 1] Add attributes of your file system here
 
     MyInMemoryFS();
-    ~MyInMemoryFS();
+    ~MyInMemoryFS() override;
 
     static void SetInstance();
 
@@ -47,6 +49,9 @@ public:
     virtual void fuseDestroy();
 
     // TODO: Add methods of your file system here
+
+    uint16_t findIndex(const char *path);
+    uint findFreeSpot();
 
 };
 
