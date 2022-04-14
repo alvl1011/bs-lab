@@ -15,7 +15,7 @@
 #define NUM_OPEN_FILES 64
 
 struct MyFsNode {
-    char name[NAME_LENGTH + 1]{};
+    char name[NAME_LENGTH]{};
     uint32_t size = 0;
     uid_t uid{};
     gid_t gid{};
