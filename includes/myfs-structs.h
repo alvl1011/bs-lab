@@ -14,6 +14,22 @@
 #define NUM_DIR_ENTRIES 64
 #define NUM_OPEN_FILES 64
 
-// TODO: Add structures of your file system here
+struct MyFsNode {
+    char name[NAME_LENGTH]{};
+    uint32_t size = 0;
+    uid_t uid{};
+    gid_t gid{};
+    mode_t mode = S_IFREG | 0777;
+    char* data{};
+    time_t atime{}, ctime{}, mtime{};
+};
+
+struct BlockCache {
+    char read_cache[BLOCK_SIZE]{};
+    uint32_t read_cache_block = -1;
+    char write_cache[BLOCK_SIZE]{};
+    uint32_t write_cache_block = -1;
+};
+
 
 #endif /* myfs_structs_h */

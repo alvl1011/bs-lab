@@ -14,9 +14,9 @@
 #undef DEBUG
 
 // TODO: Comment lines to reduce debug messages
-#define DEBUG
-#define DEBUG_METHODS
-#define DEBUG_RETURN_VALUES
+//#define DEBUG
+//#define DEBUG_METHODS
+//#define DEBUG_RETURN_VALUES
 
 #include <unistd.h>
 #include <string.h>

@@ -16,6 +16,7 @@ protected:
 public:
     static MyOnDiskFS *Instance();
 
+
     // TODO: [PART 1] Add attributes of your file system here
 
     MyOnDiskFS();
@@ -42,7 +43,6 @@ public:
     virtual void fuseDestroy();
 
     // TODO: Add methods of your file system here
-
 };
 
 #endif //MYFS_MYONDISKFS_H

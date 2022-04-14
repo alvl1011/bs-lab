@@ -25,9 +25,9 @@
 #undef DEBUG
 
 // TODO: Comment lines to reduce debug messages
-#define DEBUG
-#define DEBUG_METHODS
-#define DEBUG_RETURN_VALUES
+//#define DEBUG
+//#define DEBUG_METHODS
+//#define DEBUG_RETURN_VALUES
 
 #include <unistd.h>
 #include <string.h>
@@ -42,18 +42,16 @@
 ///
 /// You may add your own constructor code here.
 MyInMemoryFS::MyInMemoryFS() : MyFS() {
-
-    // TODO: [PART 1] Add your constructor code here
-
+    files = new MyFsNode[NUM_DIR_ENTRIES];
+    open_files = new uint32_t[NUM_OPEN_FILES];
 }
 
 /// @brief Destructor of the in-memory file system class.
 ///
 /// You may add your own destructor code here.
 MyInMemoryFS::~MyInMemoryFS() {
-
-    // TODO: [PART 1] Add your cleanup code here
-
+    delete[] files;
+    delete[] open_files;
 }
 
 /// @brief Create a new file.
@@ -390,4 +388,5 @@ void MyInMemoryFS::fuseDestroy() {
 void MyInMemoryFS::SetInstance() {
     MyFS::_instance= new MyInMemoryFS();
 }
+
 
