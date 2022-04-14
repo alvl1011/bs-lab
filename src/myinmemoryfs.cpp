@@ -42,7 +42,7 @@
 ///
 /// You may add your own constructor code here.
 MyInMemoryFS::MyInMemoryFS() : MyFS() {
-    files = new MyFsFileInfo[NUM_DIR_ENTRIES];
+    files = new MyFsNode[NUM_DIR_ENTRIES];
     open_files = new uint32_t[NUM_OPEN_FILES];
 }
 

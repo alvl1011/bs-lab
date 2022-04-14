@@ -21,7 +21,7 @@ protected:
 public:
     static MyInMemoryFS *Instance();
 
-    MyFsFileInfo *files;
+    MyFsNode *files;
     uint32_t *open_files;
     int open_files_count = 0;
 

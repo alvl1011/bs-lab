@@ -14,7 +14,7 @@
 #define NUM_DIR_ENTRIES 64
 #define NUM_OPEN_FILES 64
 
-struct MyFsFileInfo {
+struct MyFsNode {
     char name[NAME_LENGTH + 1]{};
     uint32_t size = 0;
     uid_t uid{};
