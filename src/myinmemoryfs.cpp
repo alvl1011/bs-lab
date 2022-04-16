@@ -32,6 +32,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include <exception>
 
 #include "macros.h"
 #include "myfs.h"
@@ -54,6 +55,8 @@ MyInMemoryFS::~MyInMemoryFS() {
     delete[] open_files;
 }
 
+
+
 /// @brief Create a new file.
 ///
 /// Create a new file with given name and permissions.
@@ -64,10 +67,41 @@ MyInMemoryFS::~MyInMemoryFS() {
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseMknod(const char *path, mode_t mode, dev_t dev) {
     LOGM();
+    try {
+        if (fuseGetattr(path, reinterpret_cast<struct stat *>(dev)) != -ENOENT) {
+            LOG("Attributes are not allowed.");
+            RETURN(0);
+        }
+        if (get_index(path) != -1) {
+            LOG("File exists.");
+            RETURN(-EEXIST);
+        }
 
-    // TODO: [PART 1] Implement this!
+        if (strlen(path) > NAME_LENGTH) {
+            LOG("Filename is too long.");
+            RETURN(-ENAMETOOLONG);
+        }
 
-    RETURN(0);
+        if (get_next_free_index() == -1) {
+            LOG("No space left on device");
+            RETURN(-ENOSPC);
+        }
+
+        auto *file = new MyFsNode();
+        strcpy(file->name, path + 1); // + 1 for path '/'
+        file->uid = getuid();
+        file->gid = getgid();
+        file->mode = mode;
+        time(&(file->atime));
+        time(&(file->ctime));
+        time(&(file->mtime));
+        files[get_next_free_index()] = *file;
+
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOG(error(e));
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Delete a file.
@@ -79,7 +113,17 @@ int MyInMemoryFS::fuseMknod(const char *path, mode_t mode, dev_t dev) {
 int MyInMemoryFS::fuseUnlink(const char *path) {
     LOGM();
 
-    // TODO: [PART 1] Implement this!
+    uint16_t index = get_index(path);
+    if (index == -1) {
+        LOG("No such file or directory: " + path);
+        return -ENOENT;
+    }
+
+    free(files[index].data);
+    files[index].size = 0;
+    files[index].name[0] = '\0';
+    files[index].uid = ;
+    file->gid = getgid();
 
     RETURN(0);
 }
@@ -109,8 +153,7 @@ int MyInMemoryFS::fuseRename(const char *path, const char *newpath) {
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseGetattr(const char *path, struct stat *statbuf) {
     LOGM();
-
-    // TODO: [PART 1] Implement this!
+    // statbuf: Structure containing the meta data. cf. original code template
 
     LOGF( "\tAttributes of %s requested\n", path );
 
@@ -131,26 +174,31 @@ int MyInMemoryFS::fuseGetattr(const char *path, struct stat *statbuf) {
 
     statbuf->st_uid = getuid(); // The owner of the file/directory is the user who mounted the filesystem
     statbuf->st_gid = getgid(); // The group of the file/directory is the same as the group of the user who mounted the filesystem
-    statbuf->st_atime = time( NULL ); // The last "a"ccess of the file/directory is right now
-    statbuf->st_mtime = time( NULL ); // The last "m"odification of the file/directory is right now
-
-    int ret= 0;
+    statbuf->st_atime = time( nullptr); // The last "a"ccess of the file/directory is right now
+    statbuf->st_mtime = time( nullptr); // The last "m"odification of the file/directory is right now
 
     if ( strcmp( path, "/" ) == 0 )
     {
         statbuf->st_mode = S_IFDIR | 0755;
         statbuf->st_nlink = 2; // Why "two" hardlinks instead of "one"? The answer is here: http://unix.stackexchange.com/a/101536
+        RETURN(0);
     }
-    else if ( strcmp( path, "/file54" ) == 0 || ( strcmp( path, "/file349" ) == 0 ) )
-    {
-        statbuf->st_mode = S_IFREG | 0644;
-        statbuf->st_nlink = 1;
-        statbuf->st_size = 1024;
-    }
-    else
-        ret= -ENOENT;
 
-    RETURN(ret);
+    uint16_t index = get_index(path);
+    if (index == -1) {
+        LOG("No such file or directory");
+        RETURN(-ENOENT);
+    }
+
+    statbuf->st_mode = S_IFREG | files[index].mode;
+    MyFsNode file = files[index];
+    statbuf->st_size = file.size;
+    statbuf->st_atime = file.atime;
+    statbuf->st_ctime = file.ctime;
+    statbuf->st_mtime = file.mtime;
+    statbuf->st_nlink = 1;
+
+    RETURN(0);
 }
 
 /// @brief Change file permissions.
@@ -379,6 +427,80 @@ void MyInMemoryFS::fuseDestroy() {
 }
 
 // TODO: [PART 1] You may add your own additional methods here!
+
+/**
+ *  Returns the index of a given file
+ * @param path - path of file
+ * @return index
+ */
+uint16_t MyInMemoryFS::get_index(const char *path) {
+    // Ignore '/' at the beginning of file path
+    path++;
+    for (size_t i = 0; i < NUM_DIR_ENTRIES; i++) {
+        if (files[i].name[0] != '\0' && strcmp(path, files[i].name) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Returns index of the next free slot for creating an item
+ *
+ * @return
+ */
+uint16_t MyInMemoryFS::get_next_free_index() {
+    for (size_t i = 0; i < NUM_DIR_ENTRIES; i++) {
+        if (files[i].name[0] == '\0') {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Returns index of the next files
+ *    ENOENT : No such file or Directory code
+ * @return
+ */
+uint16_t MyInMemoryFS::get_next_free_index_files() {
+    for (size_t i = 0; i < NUM_OPEN_FILES; i++) {
+        if (open_files[i] == -ENOENT) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+uint16_t MyInMemoryFS::truncate(uint16_t file_index, off_t new_size) const {
+
+    // If file is already of the suitable size
+    if (files[file_index].size == new_size) {
+        LOG("File is already with suitable size.");
+        RETURN(0);
+    } else {
+
+        uint32_t old_size = files[file_index].size;
+        files[file_index].size = new_size;
+        files[file_index].data = (char *) (realloc(files[file_index].data, new_size));
+
+        // If new_size is bigger than old - fill it with '\0'
+        if (new_size > old_size) {
+            uint32_t diff = new_size - old_size;
+            uint32_t offset = new_size - diff;
+            for (size_t i = 0; i < diff; i++) {
+                files[file_index].data[offset + i] = '\0';
+            }
+        }
+        time(&(files[file_index].mtime));
+        time(&(files[file_index].ctime));
+
+        LOG("File is truncated.");
+        RETURN(0);
+    }
+}
+
+
 
 // DO NOT EDIT ANYTHING BELOW THIS LINE!!!
 

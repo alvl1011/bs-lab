@@ -33,8 +33,8 @@ public:
     // --- Methods called by FUSE ---
     // For Documentation see https://libfuse.github.io/doxygen/structfuse__operations.html
     // Vova
-    virtual int fuseGetattr(const char *path, struct stat *statbuf);
-    virtual int fuseMknod(const char *path, mode_t mode, dev_t dev);
+    virtual int fuseGetattr(const char *path, struct stat *statbuf); // +
+    virtual int fuseMknod(const char *path, mode_t mode, dev_t dev); // +
     virtual int fuseUnlink(const char *path);
     virtual int fuseRename(const char *path, const char *newpath);
     virtual int fuseChmod(const char *path, mode_t mode);
@@ -55,7 +55,7 @@ public:
     uint16_t get_index(const char *path);
     uint16_t get_next_free_index();
     uint16_t get_next_free_index_files();
-    uint16_t truncate(uint16_t file_index, off_t new_size);
+    uint16_t truncate(uint16_t file_index, off_t new_size) const;
 
 };
 
