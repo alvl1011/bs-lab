@@ -1,0 +1,114 @@
+	Starting logging...
+
+	Using in-memory mode
+fuseInit() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:480:fuseReaddir()
+	--> Getting The List of Files of /
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /test.txt requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:69:fuseMknod()
+	File created successfully.
+fuseMknod() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /test.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /test.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:397:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:480:fuseReaddir()
+	--> Getting The List of Files of /
+
+	    test.txt
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /test.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:413:fuseTruncate()
+	File is already with suitable size.
+truncate() returned 666
+fuseTruncate() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /test.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:397:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:480:fuseReaddir()
+	--> Getting The List of Files of /
+
+	    test.txt
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /test.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:480:fuseReaddir()
+	--> Getting The List of Files of /
+
+	    test.txt
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /test.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /test.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:413:fuseTruncate()
+	File is already with suitable size.
+truncate() returned 666
+fuseTruncate() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /test.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:383:fuseWrite()
+fuseWrite() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:397:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0

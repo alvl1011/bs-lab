@@ -22,7 +22,7 @@ public:
     static MyInMemoryFS *Instance();
 
     MyFsNode *files;
-    uint32_t *open_files;
+    int *open_files;
     int open_files_count = 0;
 
     MyInMemoryFS();
@@ -35,12 +35,12 @@ public:
     // Vova
     virtual int fuseGetattr(const char *path, struct stat *statbuf); // +
     virtual int fuseMknod(const char *path, mode_t mode, dev_t dev); // +
-    virtual int fuseUnlink(const char *path);
-    virtual int fuseRename(const char *path, const char *newpath);
-    virtual int fuseChmod(const char *path, mode_t mode);
-    virtual int fuseChown(const char *path, uid_t uid, gid_t gid);
-    virtual int fuseTruncate(const char *path, off_t newSize);
-    virtual int fuseOpen(const char *path, struct fuse_file_info *fileInfo);
+    virtual int fuseUnlink(const char *path); // +
+    virtual int fuseRename(const char *path, const char *newpath); // +
+    virtual int fuseChmod(const char *path, mode_t mode); // +
+    virtual int fuseChown(const char *path, uid_t uid, gid_t gid); // +
+    virtual int fuseTruncate(const char *path, off_t newSize); // +
+    virtual int fuseOpen(const char *path, struct fuse_file_info *fileInfo); // +
     //Alex
     virtual int fuseRead(const char *path, char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo);
     virtual int fuseWrite(const char *path, const char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo);
@@ -52,10 +52,10 @@ public:
 
     // TODO: Add methods of your file system here
 
-    uint16_t get_index(const char *path);
-    uint16_t get_next_free_index();
-    uint16_t get_next_free_index_files();
-    uint16_t truncate(uint16_t file_index, off_t new_size) const;
+    int get_index(const char *path) const;
+    int get_next_free_index() const;
+    int get_next_free_index_files() const;
+    int truncate(uint16_t file_index, off_t new_size) const;
 
 };
 

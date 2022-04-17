@@ -16,7 +16,7 @@
 
 struct MyFsNode {
     char name[NAME_LENGTH]{};
-    uint32_t size = 0;
+    int size = 0;
     uid_t uid{};
     gid_t gid{};
     mode_t mode = S_IFREG | 0777;

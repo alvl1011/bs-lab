@@ -9,11 +9,10 @@
 #ifndef macros_h
 #define macros_h
 
-#define error(str)                \
-do {                        \
-fprintf(stderr, str "\n");\
-exit(-1);\
-} while(0)
+//#define error(str)                \
+//do {                        \
+//fprintf(stderr, str "\n"); exit(-1);\
+//} while(0)
 
 #ifdef DEBUG
 #define LOGF(fmt, ...) \
