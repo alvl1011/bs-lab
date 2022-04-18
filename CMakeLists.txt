@@ -10,7 +10,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include_directories(includes)
 
-add_definitions("-Wall -DFUSE_USE_VERSION=26")
+add_definitions("-Wall -DFUSE_USE_VERSION=26 -D_FILE_OFFSET_BITS=64")
 
 add_executable(mount.myfs src/blockdevice.cpp
         src/myfs.cpp
