@@ -42,12 +42,12 @@ public:
     virtual int fuseTruncate(const char *path, off_t newSize); // +
     virtual int fuseOpen(const char *path, struct fuse_file_info *fileInfo); // +
     //Alex
-    virtual int fuseRead(const char *path, char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo);
-    virtual int fuseWrite(const char *path, const char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo);
-    virtual int fuseRelease(const char *path, struct fuse_file_info *fileInfo);
-    virtual void* fuseInit(struct fuse_conn_info *conn);
-    virtual int fuseReaddir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offset, struct fuse_file_info *fileInfo);
-    virtual int fuseTruncate(const char *path, off_t offset, struct fuse_file_info *fileInfo);
+    virtual int fuseRead(const char *path, char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo); // +
+    virtual int fuseWrite(const char *path, const char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo); // +
+    virtual int fuseRelease(const char *path, struct fuse_file_info *fileInfo); // +
+    virtual void* fuseInit(struct fuse_conn_info *conn); // +
+    virtual int fuseReaddir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offset, struct fuse_file_info *fileInfo); // +
+    virtual int fuseTruncate(const char *path, off_t offset, struct fuse_file_info *fileInfo); // +
     virtual void fuseDestroy();
 
     // TODO: Add methods of your file system here

@@ -6,109 +6,1154 @@ fuseInit() returned 0
 		Attributes of / requested
 
 fuseGetattr() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of / requested
-
-fuseGetattr() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:480:fuseReaddir()
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:534:fuseReaddir()
 	--> Getting The List of Files of /
 
 fuseReaddir() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of /test.txt requested
+		Attributes of /file.txt requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
 
 fuseGetattr() returned -2
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:69:fuseMknod()
 	File created successfully.
 fuseMknod() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of /test.txt requested
+		Attributes of /file.txt requested
 
 fuseGetattr() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
 	File opened.
 fuseOpen() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of /test.txt requested
+		Attributes of /file.txt requested
 
 fuseGetattr() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:397:fuseRelease()
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:69:fuseMknod()
+	File created successfully.
+fuseMknod() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
 fuseRelease() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
 		Attributes of / requested
 
 fuseGetattr() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:480:fuseReaddir()
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:534:fuseReaddir()
 	--> Getting The List of Files of /
 
-	    test.txt
+	    file.txt
+
+	    file1.txt
 
 fuseReaddir() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of /test.txt requested
+		Attributes of /file.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
 
 fuseGetattr() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
 	File opened.
 fuseOpen() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:413:fuseTruncate()
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /file.txt, 0, 4096
+
+fuseRead() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /.file.txt.swp requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /.file.txt.swp requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /.file.txt.swp requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:69:fuseMknod()
+	File created successfully.
+fuseMknod() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /.file.txt.swp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 1024
+fuseWrite() returned 1024
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /file.txt, 0, 4096
+
+fuseRead() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /.file.txt.swp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:111:fuseUnlink()
+	File deleted successfully.
+fuseUnlink() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /.file.txt.swp requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:69:fuseMknod()
+	File created successfully.
+fuseMknod() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /.file.txt.swp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 1024
+fuseWrite() returned 1024
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:467:fuseTruncate()
 	File is already with suitable size.
 truncate() returned 666
 fuseTruncate() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of /test.txt requested
+		Attributes of /file.txt requested
 
 fuseGetattr() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:397:fuseRelease()
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 95
+fuseWrite() returned 95
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
 fuseRelease() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of / requested
+		Attributes of /file.txt requested
 
 fuseGetattr() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:480:fuseReaddir()
-	--> Getting The List of Files of /
-
-	    test.txt
-
-fuseReaddir() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of /test.txt requested
+		Attributes of /.file.txt.swp requested
 
 fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:111:fuseUnlink()
+	File deleted successfully.
+fuseUnlink() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
 		Attributes of / requested
 
 fuseGetattr() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:480:fuseReaddir()
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:534:fuseReaddir()
 	--> Getting The List of Files of /
 
-	    test.txt
+	    file.txt
+
+	    file1.txt
 
 fuseReaddir() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of /test.txt requested
+		Attributes of /file.txt requested
 
 fuseGetattr() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of /test.txt requested
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
 
 fuseGetattr() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
 	File opened.
 fuseOpen() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:413:fuseTruncate()
-	File is already with suitable size.
-truncate() returned 666
-fuseTruncate() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
-		Attributes of /test.txt requested
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /file.txt, 0, 4096
 
-fuseGetattr() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:383:fuseWrite()
-fuseWrite() returned 0
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:397:fuseRelease()
+	File is read. Size: 95
+fuseRead() returned 95
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
 fuseRelease() returned 0
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
 		Attributes of / requested
 
 fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:69:fuseMknod()
+	File created successfully.
+fuseMknod() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /file.txt, 0, 4096
+
+	File is read. Size: 95
+fuseRead() returned 95
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /file.txt, 0, 4096
+
+	File is read. Size: 95
+fuseRead() returned 95
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /file.txt, 0, 4096
+
+	File is read. Size: 95
+fuseRead() returned 95
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:111:fuseUnlink()
+	File deleted successfully.
+fuseUnlink() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /elf_x86_64.rpo requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /now.rpo requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /relro.rpo requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.rpo requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:147:fuseRename()
+	File renamed.
+fuseRename() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:534:fuseReaddir()
+	--> Getting The List of Files of /
+
+	    file.cpp
+
+	    file1.txt
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp.gch requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /file.cpp, 0, 4096
+
+	File is read. Size: 95
+fuseRead() returned 95
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:69:fuseMknod()
+	File created successfully.
+fuseMknod() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /libgcc_s.so.1 requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /libgcc_s.so.1 requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /libgcc_s.so.1 requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /libgcc_s.so.1 requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /a.out, 0, 4096
+
+fuseRead() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 728
+fuseWrite() returned 728
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 32
+fuseWrite() returned 32
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 32
+fuseWrite() returned 32
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /a.out, 4096, 4096
+
+fuseRead() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 47
+fuseWrite() returned 47
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 4
+fuseWrite() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /a.out, 8192, 4096
+
+	File is read. Size: 4
+fuseRead() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 48
+fuseWrite() returned 48
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 4
+fuseWrite() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 22
+fuseWrite() returned 22
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 5
+fuseWrite() returned 5
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 5
+fuseWrite() returned 5
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 186
+fuseWrite() returned 186
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /a.out, 12288, 4096
+
+	File is read. Size: 4
+fuseRead() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 42
+fuseWrite() returned 42
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 157
+fuseWrite() returned 157
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 15
+fuseWrite() returned 15
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 96
+fuseWrite() returned 96
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 127
+fuseWrite() returned 127
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 96
+fuseWrite() returned 96
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 4
+fuseWrite() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 2697
+fuseWrite() returned 2697
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 88
+fuseWrite() returned 88
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 28
+fuseWrite() returned 28
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 26
+fuseWrite() returned 26
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 64
+fuseWrite() returned 64
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 667
+fuseWrite() returned 667
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 512
+fuseWrite() returned 512
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 40
+fuseWrite() returned 40
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 80
+fuseWrite() returned 80
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 96
+fuseWrite() returned 96
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 168
+fuseWrite() returned 168
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 56
+fuseWrite() returned 56
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 56
+fuseWrite() returned 56
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 24
+fuseWrite() returned 24
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 80
+fuseWrite() returned 80
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 88
+fuseWrite() returned 88
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 24
+fuseWrite() returned 24
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 72
+fuseWrite() returned 72
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 84
+fuseWrite() returned 84
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 282
+fuseWrite() returned 282
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 64
+fuseWrite() returned 64
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 1048
+fuseWrite() returned 1048
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 936
+fuseWrite() returned 936
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 36
+fuseWrite() returned 36
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:236:fuseChmod()
+	File permissions changed: 33261
+
+fuseChmod() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:534:fuseReaddir()
+	--> Getting The List of Files of /
+
+	    file.cpp
+
+	    file1.txt
+
+	    a.out
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /a.out, 0, 16384
+
+	File is read. Size: 16384
+fuseRead() returned 16384
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /a.out, 16384, 4096
+
+	File is read. Size: 936
+fuseRead() returned 936
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:467:fuseTruncate()
+	File is truncated.
+truncate() returned 0
+	File size is set ot new size. Old size: 17320; New size: 0
+fuseTruncate() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:534:fuseReaddir()
+	--> Getting The List of Files of /
+
+	    file.cpp
+
+	    file1.txt
+
+	    a.out
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /a.out, 0, 4096
+
+fuseRead() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /a.out, 0, 4096
+
+fuseRead() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /a.out requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:111:fuseUnlink()
+	File deleted successfully.
+fuseUnlink() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp.gch requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /file.cpp, 0, 4096
+
+	File is read. Size: 95
+fuseRead() returned 95
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:69:fuseMknod()
+	File created successfully.
+fuseMknod() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /libgcc_s.so.1 requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /libgcc_s.so.1 requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /libgcc_s.so.1 requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /libgcc_s.so.1 requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /program, 0, 4096
+
+fuseRead() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 728
+fuseWrite() returned 728
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 32
+fuseWrite() returned 32
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 32
+fuseWrite() returned 32
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /program, 4096, 4096
+
+fuseRead() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 47
+fuseWrite() returned 47
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 4
+fuseWrite() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /program, 8192, 4096
+
+	File is read. Size: 4
+fuseRead() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 48
+fuseWrite() returned 48
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 4
+fuseWrite() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 22
+fuseWrite() returned 22
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 5
+fuseWrite() returned 5
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 5
+fuseWrite() returned 5
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 186
+fuseWrite() returned 186
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /program, 12288, 4096
+
+	File is read. Size: 4
+fuseRead() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 42
+fuseWrite() returned 42
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 157
+fuseWrite() returned 157
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 15
+fuseWrite() returned 15
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 8
+fuseWrite() returned 8
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 96
+fuseWrite() returned 96
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 127
+fuseWrite() returned 127
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 96
+fuseWrite() returned 96
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 4
+fuseWrite() returned 4
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 2697
+fuseWrite() returned 2697
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 88
+fuseWrite() returned 88
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 28
+fuseWrite() returned 28
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 26
+fuseWrite() returned 26
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 64
+fuseWrite() returned 64
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 667
+fuseWrite() returned 667
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 512
+fuseWrite() returned 512
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 40
+fuseWrite() returned 40
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 80
+fuseWrite() returned 80
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 96
+fuseWrite() returned 96
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 168
+fuseWrite() returned 168
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 56
+fuseWrite() returned 56
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 56
+fuseWrite() returned 56
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 24
+fuseWrite() returned 24
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 80
+fuseWrite() returned 80
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 88
+fuseWrite() returned 88
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 24
+fuseWrite() returned 24
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 72
+fuseWrite() returned 72
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 84
+fuseWrite() returned 84
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 282
+fuseWrite() returned 282
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 64
+fuseWrite() returned 64
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 1048
+fuseWrite() returned 1048
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 936
+fuseWrite() returned 936
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:386:fuseWrite()
+	File is written. Size: 36
+fuseWrite() returned 36
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:236:fuseChmod()
+	File permissions changed: 33261
+
+fuseChmod() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:534:fuseReaddir()
+	--> Getting The List of Files of /
+
+	    file.cpp
+
+	    file1.txt
+
+	    program
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:294:fuseOpen()
+	File opened.
+fuseOpen() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /program, 0, 16384
+
+	File is read. Size: 16384
+fuseRead() returned 16384
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:341:fuseRead()
+	--> Trying to read /program, 16384, 4096
+
+	File is read. Size: 936
+fuseRead() returned 936
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:427:fuseRelease()
+fuseRelease() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:111:fuseUnlink()
+	File deleted successfully.
+fuseUnlink() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.txt requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /program requested
+
+fuseGetattr() returned -2
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:534:fuseReaddir()
+	--> Getting The List of Files of /
+
+	    file.cpp
+
+	    file1.txt
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file.cpp requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:111:fuseUnlink()
+	File deleted successfully.
+fuseUnlink() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of /file1.txt requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:111:fuseUnlink()
+	File deleted successfully.
+fuseUnlink() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:534:fuseReaddir()
+	--> Getting The List of Files of /
+
+fuseReaddir() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:180:fuseGetattr()
+		Attributes of / requested
+
+fuseGetattr() returned 0
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp:593:fuseDestroy()

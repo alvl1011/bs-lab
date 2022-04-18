@@ -339,29 +339,32 @@ int MyInMemoryFS::fuseOpen(const char *path, struct fuse_file_info *fileInfo) {
 /// -ERRNO on failure.
 int MyInMemoryFS::fuseRead(const char *path, char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo) {
     LOGM();
-
-    // TODO: [PART 1] Implement this!
-
     LOGF( "--> Trying to read %s, %lu, %lu\n", path, (unsigned long) offset, size );
+    try {
+        // no such file or directory
+        if(open_files[fileInfo->fh] == -ENOENT) {
+            return -EBADF;
+        }
 
-    char file54Text[] = "Hello World From File54!\n";
-    char file349Text[] = "Hello World From File349!\n";
-    char *selectedText = NULL;
+        int index = open_files[fileInfo->fh];
 
-    // ... //
+        // if offset is bigger than file size
+        if (offset >= files[index].size) {
+            RETURN(0);
+        }
 
-    if ( strcmp( path, "/file54" ) == 0 )
-        selectedText = file54Text;
-    else if ( strcmp( path, "/file349" ) == 0 )
-        selectedText = file349Text;
-    else
-        return -ENOENT;
+        if ((offset + size) > files[index].size) {
+            size = files[index].size - offset;
+        }
+        memcpy(buf, files[index].data + offset, size);
+        time(&(files[index].atime));
 
-    // ... //
-
-    memcpy( buf, selectedText + offset, size );
-
-    RETURN((int) (strlen( selectedText ) - offset));
+        LOGF("File is read. Size: %lu", size);
+        RETURN((int) size);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Write to a file.
@@ -382,9 +385,36 @@ int MyInMemoryFS::fuseRead(const char *path, char *buf, size_t size, off_t offse
 int MyInMemoryFS::fuseWrite(const char *path, const char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo) {
     LOGM();
 
-    // TODO: [PART 1] Implement this!
+    try {
+        if(open_files[fileInfo->fh] == -ENOENT) {
+            return -EBADF;
+        }
 
-    RETURN(0);
+        int index = open_files[fileInfo->fh];
+
+        // define new file size as the max value of old size or new content
+        int new_size = 0;
+        if (files[index].size < (offset + size)) {
+            new_size = offset + size;
+        } else {
+            new_size = files[index].size;
+        }
+        files[index].size = new_size;
+
+        // change size of data to new size and write new contents
+        files[index].data = (char*)(realloc(files[index].data, files[index].size + 1));
+        memcpy(files[index].data + offset, buf, size);
+
+        // update timestamps
+        time(&(files[index].mtime));
+        time(&(files[index].ctime));
+
+        LOGF("File is written. Size: %lu", size);
+        RETURN((int) size);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Close a file.
@@ -396,9 +426,33 @@ int MyInMemoryFS::fuseWrite(const char *path, const char *buf, size_t size, off_
 int MyInMemoryFS::fuseRelease(const char *path, struct fuse_file_info *fileInfo) {
     LOGM();
 
-    // TODO: [PART 1] Implement this!
+    try {
+        int index = get_index(path);
+        // if file exists?
+        if (index != -1) {
+            // look in open_files
+            size_t i = 0;
+            while (i < NUM_OPEN_FILES) {
+                int curr_index = open_files[i];
 
-    RETURN(0);
+                // if found file
+                if (curr_index >= 0) {
+                    if (strcmp(path + 1, files[curr_index].name) == 0) {
+                        open_files[i] = -ENOENT;
+                        open_files_count--;
+                        break;
+                    }
+                }
+                i++;
+            }
+        } else {
+            RETURN(-ENOENT);
+        }
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Truncate a file.
@@ -502,28 +556,34 @@ int MyInMemoryFS::fuseReaddir(const char *path, void *buf, fuse_fill_dir_t fille
 /// \param [in] conn Can be ignored.
 /// \return 0.
 void* MyInMemoryFS::fuseInit(struct fuse_conn_info *conn) {
-    // Open logfile
-    this->logFile= fopen(((MyFsInfo *) fuse_get_context()->private_data)->logFile, "w+");
-    if(this->logFile == nullptr) {
-        fprintf(stderr, "ERROR: Cannot open logfile %s\n", ((MyFsInfo *) fuse_get_context()->private_data)->logFile);
-    } else {
-        // turn of logfile buffering
-        setvbuf(this->logFile, nullptr, _IOLBF, 0);
 
-        LOG("Starting logging...\n");
+    try {
+        // Open logfile
+        this->logFile= fopen(((MyFsInfo *) fuse_get_context()->private_data)->logFile, "w+");
+        if(this->logFile == nullptr) {
+            fprintf(stderr, "ERROR: Cannot open logfile %s\n", ((MyFsInfo *) fuse_get_context()->private_data)->logFile);
+        } else {
+            // turn of logfile buffering
+            setvbuf(this->logFile, nullptr, _IOLBF, 0);
 
-        LOG("Using in-memory mode");
+            LOG("Starting logging...\n");
 
-        for (size_t i = 0; i < NUM_DIR_ENTRIES; i++) {
-            files[i].name[0] = '\0';
+            LOG("Using in-memory mode");
+
+            // initialize  arrays for tracking the files during runtime
+            for (size_t i = 0; i < NUM_DIR_ENTRIES; i++) {
+                files[i].name[0] = '\0';
+            }
+            for (int i = 0; i < NUM_OPEN_FILES; i++) {
+                open_files[i] = -ENOENT;
+            }
+
         }
-        for (int i = 0; i < NUM_OPEN_FILES; i++) {
-            open_files[i] = -ENOENT;
-        }
 
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
     }
-
-    RETURN(0);
 }
 
 /// @brief Clean up a file system.
@@ -531,9 +591,6 @@ void* MyInMemoryFS::fuseInit(struct fuse_conn_info *conn) {
 /// This function is called when the file system is unmounted. You may add some cleanup code here.
 void MyInMemoryFS::fuseDestroy() {
     LOGM();
-
-    // TODO: [PART 1] Implement this!
-
 }
 
 // TODO: [PART 1] You may add your own additional methods here!
