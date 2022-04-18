@@ -5,28 +5,28 @@
 #
 ###
 
-From rastasheep/ubuntu-sshd:18.04
+FROM rastasheep/ubuntu-sshd:18.04
 
-RUN apt-get clean && \
+RUN apt-get clean \
     apt-get update &&\
-    apt-get install -y \ 
-# Install development environment
-        build-essential \
-        cmake \
-        fuse \
-        libfuse-dev \
-        pkg-config \
-        gdb \
-        valgrind \
-        rsync \
-        less \
-        vim \
-        nano \                 
-# Configure Locale
-        locales && \
+    apt-get install -y -q --no-install-recommends \
+    # Install development environment
+    build-essential \
+    cmake \
+    fuse \
+    libfuse-dev \
+    pkg-config \
+    gdb \
+    valgrind \
+    rsync \
+    less \
+    vim \
+    nano \                 
+    # Configure Locale
+    locales && \
     sed --in-place '/en_US.UTF-8/s/^#//' /etc/locale.gen && \
     locale-gen en_US.UTF-8 && \
-# Clean up
+    # Clean up
     rm -rf /var/lib/apt/lists/* /usr/src/*
 
 # Set environment variables    

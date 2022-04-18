@@ -9,12 +9,6 @@
 #ifndef macros_h
 #define macros_h
 
-#define error(str)                \
-do {                        \
-fprintf(stderr, str "\n");\
-exit(-1);\
-} while(0)
-
 #ifdef DEBUG
 #define LOGF(fmt, ...) \
 do { fprintf(this->logFile, "\t" fmt "\n", __VA_ARGS__); } while (0)
