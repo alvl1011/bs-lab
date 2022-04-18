@@ -6,14 +6,16 @@
 
 #IncludeRegexTransform: 
 
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myondiskfs.cpp
-myondiskfs.h
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myondiskfs.h
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.cpp
+myinmemoryfs.h
+/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/myinmemoryfs.h
 unistd.h
 -
 string.h
 -
 errno.h
+-
+exception
 -
 macros.h
 /mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/macros.h
@@ -84,7 +86,15 @@ includes/blockdevice.h
 myfs-structs.h
 includes/myfs-structs.h
 
-includes/myondiskfs.h
+includes/myinmemoryfs.h
+fuse.h
+-
+cmath
+-
 myfs.h
 includes/myfs.h
+blockdevice.h
+includes/blockdevice.h
+myfs-structs.h
+includes/myfs-structs.h
 

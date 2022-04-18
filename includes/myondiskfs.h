@@ -16,6 +16,9 @@ protected:
 public:
     static MyOnDiskFS *Instance();
 
+    MyFsNode *files;
+    uint32_t *open_files;
+    int open_files_count = 0;
 
     // TODO: [PART 1] Add attributes of your file system here
 
@@ -43,6 +46,11 @@ public:
     virtual void fuseDestroy();
 
     // TODO: Add methods of your file system here
+
+    uint16_t get_index(const char *path);
+    uint16_t get_next_free_index();
+    uint16_t get_next_free_index_files();
+    uint16_t truncate(uint16_t file_index, off_t new_size);
 };
 
 #endif //MYFS_MYONDISKFS_H

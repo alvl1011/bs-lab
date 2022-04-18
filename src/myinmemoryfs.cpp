@@ -25,13 +25,14 @@
 #undef DEBUG
 
 // TODO: Comment lines to reduce debug messages
-//#define DEBUG
-//#define DEBUG_METHODS
-//#define DEBUG_RETURN_VALUES
+#define DEBUG
+#define DEBUG_METHODS
+#define DEBUG_RETURN_VALUES
 
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include <exception>
 
 #include "macros.h"
 #include "myfs.h"
@@ -43,7 +44,7 @@
 /// You may add your own constructor code here.
 MyInMemoryFS::MyInMemoryFS() : MyFS() {
     files = new MyFsNode[NUM_DIR_ENTRIES];
-    open_files = new uint32_t[NUM_OPEN_FILES];
+    open_files = new int[NUM_OPEN_FILES];
 }
 
 /// @brief Destructor of the in-memory file system class.
@@ -53,6 +54,8 @@ MyInMemoryFS::~MyInMemoryFS() {
     delete[] files;
     delete[] open_files;
 }
+
+
 
 /// @brief Create a new file.
 ///
@@ -64,10 +67,38 @@ MyInMemoryFS::~MyInMemoryFS() {
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseMknod(const char *path, mode_t mode, dev_t dev) {
     LOGM();
+    try {
+        if (get_index(path) != -1) {
+            LOG("File exists.");
+            RETURN(-EEXIST);
+        }
 
-    // TODO: [PART 1] Implement this!
+        if (strlen(path) > NAME_LENGTH) {
+            LOG("Filename is too long.");
+            RETURN(-ENAMETOOLONG);
+        }
 
-    RETURN(0);
+        if (get_next_free_index() == -1) {
+            LOG("No space left on device");
+            RETURN(-ENOSPC);
+        }
+
+        auto *file = new MyFsNode();
+        strcpy(file->name, path + 1); // + 1 for path '/'
+        file->uid = getuid();
+        file->gid = getgid();
+        file->mode = mode;
+        time(&(file->atime));
+        time(&(file->ctime));
+        time(&(file->mtime));
+        files[get_next_free_index()] = *file;
+
+        LOG("File created successfully.");
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Delete a file.
@@ -78,10 +109,29 @@ int MyInMemoryFS::fuseMknod(const char *path, mode_t mode, dev_t dev) {
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseUnlink(const char *path) {
     LOGM();
+    try {
+        int index = get_index(path);
+        if (index == -1) {
+            LOG("No such file or directory.");
+            RETURN(-ENOENT);
+        }
 
-    // TODO: [PART 1] Implement this!
+        strcpy(files[index].name, "\0");
+        files[index].size = 0;
+        files[index].mode = 0;
+        files[index].uid = 0;
+        files[index].gid = 0;
+        files[index].atime = 0;
+        files[index].ctime = 0;
+        files[index].mtime = 0;
+        free(files[index].data);
 
-    RETURN(0);
+        LOG("File deleted successfully.");
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Rename a file.
@@ -95,10 +145,29 @@ int MyInMemoryFS::fuseUnlink(const char *path) {
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseRename(const char *path, const char *newpath) {
     LOGM();
+    try {
+        // if name length is valid
+        if (strlen(newpath + 1) > NAME_LENGTH) {
+            RETURN(-ENAMETOOLONG);
+        }
 
-    // TODO: [PART 1] Implement this!
+        // if file already exists
+        if (get_index(newpath) != -1) {
+            RETURN(-EEXIST);
+        }
 
-    return 0;
+        int index = get_index(path);
+        if (index != -1) {
+            strcpy(files[index].name, newpath + 1);
+            LOG("File renamed.");
+            RETURN(0);
+        }
+        LOG("No such file or directory.");
+        RETURN(-ENOENT);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Get file meta data.
@@ -109,8 +178,7 @@ int MyInMemoryFS::fuseRename(const char *path, const char *newpath) {
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseGetattr(const char *path, struct stat *statbuf) {
     LOGM();
-
-    // TODO: [PART 1] Implement this!
+    // statbuf: Structure containing the meta data. cf. original code template
 
     LOGF( "\tAttributes of %s requested\n", path );
 
@@ -131,26 +199,30 @@ int MyInMemoryFS::fuseGetattr(const char *path, struct stat *statbuf) {
 
     statbuf->st_uid = getuid(); // The owner of the file/directory is the user who mounted the filesystem
     statbuf->st_gid = getgid(); // The group of the file/directory is the same as the group of the user who mounted the filesystem
-    statbuf->st_atime = time( NULL ); // The last "a"ccess of the file/directory is right now
-    statbuf->st_mtime = time( NULL ); // The last "m"odification of the file/directory is right now
-
-    int ret= 0;
+    statbuf->st_atime = time( nullptr); // The last "a"ccess of the file/directory is right now
+    statbuf->st_mtime = time( nullptr); // The last "m"odification of the file/directory is right now
 
     if ( strcmp( path, "/" ) == 0 )
     {
         statbuf->st_mode = S_IFDIR | 0755;
         statbuf->st_nlink = 2; // Why "two" hardlinks instead of "one"? The answer is here: http://unix.stackexchange.com/a/101536
     }
-    else if ( strcmp( path, "/file54" ) == 0 || ( strcmp( path, "/file349" ) == 0 ) )
-    {
-        statbuf->st_mode = S_IFREG | 0644;
-        statbuf->st_nlink = 1;
-        statbuf->st_size = 1024;
-    }
-    else
-        ret= -ENOENT;
 
-    RETURN(ret);
+    int index = get_index(path);
+    int return_value = 0;
+
+    if (strcmp(path, "/") == 0) {
+        statbuf->st_mode = S_IFDIR | 0755;
+        statbuf->st_nlink = 2; // Why "two" hardlinks instead of "one"? The answer is here: http://unix.stackexchange.com/a/101536
+    } else if (strcmp(path + 1, files[index].name) == 0) {
+        statbuf->st_nlink = 1;
+        statbuf->st_mode = files[index].mode;
+        statbuf->st_size = files[index].size;
+    }
+    else {
+        return_value = -ENOENT;
+    }
+    RETURN(return_value);
 }
 
 /// @brief Change file permissions.
@@ -162,10 +234,21 @@ int MyInMemoryFS::fuseGetattr(const char *path, struct stat *statbuf) {
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseChmod(const char *path, mode_t mode) {
     LOGM();
+    try {
+        int index = get_index(path);
+        if (index == -1) {
+            LOG("No such file or directory.");
+            RETURN(-ENOENT);
+        }
 
-    // TODO: [PART 1] Implement this!
+        files[index].mode = mode;
 
-    RETURN(0);
+        LOGF("File permissions changed: %d\n", files[index].mode);
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Change the owner of a file.
@@ -178,10 +261,25 @@ int MyInMemoryFS::fuseChmod(const char *path, mode_t mode) {
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseChown(const char *path, uid_t uid, gid_t gid) {
     LOGM();
+    try {
+        int index = get_index(path);
+        if (index == -1) {
+            LOG("No such file or directory.");
+            RETURN(-ENOENT);
+        }
 
-    // TODO: [PART 1] Implement this!
+        files[index].uid = uid;
 
-    RETURN(0);
+        if (gid <= 100000) {
+            files[index].gid = gid;
+        }
+
+        LOGF("File owner changed: %d\n", files[index].mode);
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Open a file.
@@ -195,9 +293,31 @@ int MyInMemoryFS::fuseChown(const char *path, uid_t uid, gid_t gid) {
 int MyInMemoryFS::fuseOpen(const char *path, struct fuse_file_info *fileInfo) {
     LOGM();
 
-    // TODO: [PART 1] Implement this!
+    try {
+        // if too many files are still opened
+        if (open_files_count == NUM_OPEN_FILES) {
+            LOGF("Too many open files. Open files count: %d\n", open_files_count);
+            RETURN(-EMFILE);
+        }
 
-    RETURN(0);
+        int index_path = get_index(path);
+        if (index_path == -1) {
+            LOG("No such file or directory.");
+            RETURN(-ENOENT);
+        }
+
+        int open_files_index = get_next_free_index_files();
+        open_files[open_files_index] = index_path;
+        open_files_count++;
+        // update file handler
+        fileInfo->fh = open_files_index;
+
+        LOG("File opened.");
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Read from a file.
@@ -219,29 +339,32 @@ int MyInMemoryFS::fuseOpen(const char *path, struct fuse_file_info *fileInfo) {
 /// -ERRNO on failure.
 int MyInMemoryFS::fuseRead(const char *path, char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo) {
     LOGM();
-
-    // TODO: [PART 1] Implement this!
-
     LOGF( "--> Trying to read %s, %lu, %lu\n", path, (unsigned long) offset, size );
+    try {
+        // no such file or directory
+        if(open_files[fileInfo->fh] == -ENOENT) {
+            return -EBADF;
+        }
 
-    char file54Text[] = "Hello World From File54!\n";
-    char file349Text[] = "Hello World From File349!\n";
-    char *selectedText = NULL;
+        int index = open_files[fileInfo->fh];
 
-    // ... //
+        // if offset is bigger than file size
+        if (offset >= files[index].size) {
+            RETURN(0);
+        }
 
-    if ( strcmp( path, "/file54" ) == 0 )
-        selectedText = file54Text;
-    else if ( strcmp( path, "/file349" ) == 0 )
-        selectedText = file349Text;
-    else
-        return -ENOENT;
+        if ((offset + size) > files[index].size) {
+            size = files[index].size - offset;
+        }
+        memcpy(buf, files[index].data + offset, size);
+        time(&(files[index].atime));
 
-    // ... //
-
-    memcpy( buf, selectedText + offset, size );
-
-    RETURN((int) (strlen( selectedText ) - offset));
+        LOGF("File is read. Size: %lu", size);
+        RETURN((int) size);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Write to a file.
@@ -262,9 +385,36 @@ int MyInMemoryFS::fuseRead(const char *path, char *buf, size_t size, off_t offse
 int MyInMemoryFS::fuseWrite(const char *path, const char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo) {
     LOGM();
 
-    // TODO: [PART 1] Implement this!
+    try {
+        if(open_files[fileInfo->fh] == -ENOENT) {
+            return -EBADF;
+        }
 
-    RETURN(0);
+        int index = open_files[fileInfo->fh];
+
+        // define new file size as the max value of old size or new content
+        int new_size = 0;
+        if (files[index].size < (offset + size)) {
+            new_size = offset + size;
+        } else {
+            new_size = files[index].size;
+        }
+        files[index].size = new_size;
+
+        // change size of data to new size and write new contents
+        files[index].data = (char*)(realloc(files[index].data, files[index].size + 1));
+        memcpy(files[index].data + offset, buf, size);
+
+        // update timestamps
+        time(&(files[index].mtime));
+        time(&(files[index].ctime));
+
+        LOGF("File is written. Size: %lu", size);
+        RETURN((int) size);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Close a file.
@@ -276,9 +426,33 @@ int MyInMemoryFS::fuseWrite(const char *path, const char *buf, size_t size, off_
 int MyInMemoryFS::fuseRelease(const char *path, struct fuse_file_info *fileInfo) {
     LOGM();
 
-    // TODO: [PART 1] Implement this!
+    try {
+        int index = get_index(path);
+        // if file exists?
+        if (index != -1) {
+            // look in open_files
+            size_t i = 0;
+            while (i < NUM_OPEN_FILES) {
+                int curr_index = open_files[i];
 
-    RETURN(0);
+                // if found file
+                if (curr_index >= 0) {
+                    if (strcmp(path + 1, files[curr_index].name) == 0) {
+                        open_files[i] = -ENOENT;
+                        open_files_count--;
+                        break;
+                    }
+                }
+                i++;
+            }
+        } else {
+            RETURN(-ENOENT);
+        }
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Truncate a file.
@@ -291,10 +465,25 @@ int MyInMemoryFS::fuseRelease(const char *path, struct fuse_file_info *fileInfo)
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseTruncate(const char *path, off_t newSize) {
     LOGM();
+    try {
+        int index = get_index(path);
+        int old_size = files[index].size;
+        if (index == -1) {
+            LOG("No such file or directory.");
+            RETURN(-ENOENT);
+        }
+        int return_value = truncate(index, newSize);
 
-    // TODO: [PART 1] Implement this!
-
-    return 0;
+        // if truncate responses '666' -> File is already with suitable size.
+        if (return_value == 666) {
+            RETURN(0);
+        }
+        LOGF("File size is set ot new size. Old size: %d; New size: %d", old_size, files[index].size);
+        RETURN(return_value);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Truncate a file.
@@ -309,10 +498,26 @@ int MyInMemoryFS::fuseTruncate(const char *path, off_t newSize) {
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseTruncate(const char *path, off_t newSize, struct fuse_file_info *fileInfo) {
     LOGM();
+    try {
+        int index = open_files[fileInfo->fh];
+        int old_size = files[index].size;
+        if (index == -1) {
+            LOG("No such file or directory.");
+            RETURN(-ENOENT);
+        }
+        int return_value = truncate(index, newSize);
 
-    // TODO: [PART 1] Implement this!
+        // if truncate responses '666' -> File is already with suitable size.
+        if (return_value == 666) {
+            RETURN(0);
+        }
 
-    RETURN(0);
+        LOGF("File size is set ot new size. Old size: %d; New size: %d", old_size, files[index].size);
+        RETURN(return_value);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
+        RETURN(-ENOSYS);
+    }
 }
 
 /// @brief Read a directory.
@@ -327,18 +532,19 @@ int MyInMemoryFS::fuseTruncate(const char *path, off_t newSize, struct fuse_file
 /// \return 0 on success, -ERRNO on failure.
 int MyInMemoryFS::fuseReaddir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offset, struct fuse_file_info *fileInfo) {
     LOGM();
-
-    // TODO: [PART 1] Implement this!
-
     LOGF( "--> Getting The List of Files of %s\n", path );
 
-    filler( buf, ".", NULL, 0 ); // Current Directory
-    filler( buf, "..", NULL, 0 ); // Parent Directory
+    filler( buf, ".", nullptr, 0 ); // Current Directory
+    filler( buf, "..", nullptr, 0 ); // Parent Directory
 
-    if ( strcmp( path, "/" ) == 0 ) // If the user is trying to show the files/directories of the root directory show the following
-    {
-        filler( buf, "file54", NULL, 0 );
-        filler( buf, "file349", NULL, 0 );
+    // iterate over dir
+    if (strcmp(path, "/") == 0) {
+        for (int i = 0; i < NUM_DIR_ENTRIES; i++) {
+            if (files[i].name[0] != '\0' ) {
+                LOGF("    %s\n", files[i].name);
+                filler(buf, files[i].name, nullptr, 0);
+            }
+        }
     }
 
     RETURN(0);
@@ -350,22 +556,34 @@ int MyInMemoryFS::fuseReaddir(const char *path, void *buf, fuse_fill_dir_t fille
 /// \param [in] conn Can be ignored.
 /// \return 0.
 void* MyInMemoryFS::fuseInit(struct fuse_conn_info *conn) {
-    // Open logfile
-    this->logFile= fopen(((MyFsInfo *) fuse_get_context()->private_data)->logFile, "w+");
-    if(this->logFile == NULL) {
-        fprintf(stderr, "ERROR: Cannot open logfile %s\n", ((MyFsInfo *) fuse_get_context()->private_data)->logFile);
-    } else {
-        // turn of logfile buffering
-        setvbuf(this->logFile, NULL, _IOLBF, 0);
 
-        LOG("Starting logging...\n");
+    try {
+        // Open logfile
+        this->logFile= fopen(((MyFsInfo *) fuse_get_context()->private_data)->logFile, "w+");
+        if(this->logFile == nullptr) {
+            fprintf(stderr, "ERROR: Cannot open logfile %s\n", ((MyFsInfo *) fuse_get_context()->private_data)->logFile);
+        } else {
+            // turn of logfile buffering
+            setvbuf(this->logFile, nullptr, _IOLBF, 0);
 
-        LOG("Using in-memory mode");
+            LOG("Starting logging...\n");
 
-        // TODO: [PART 1] Implement your initialization methods here
+            LOG("Using in-memory mode");
+
+            // initialize  arrays for tracking the files during runtime
+            for (size_t i = 0; i < NUM_DIR_ENTRIES; i++) {
+                files[i].name[0] = '\0';
+            }
+            for (int i = 0; i < NUM_OPEN_FILES; i++) {
+                open_files[i] = -ENOENT;
+            }
+
+        }
+
+        RETURN(0);
+    } catch (const std::exception& e) {
+        LOGF("Problem occurred: %s\n", e.what());
     }
-
-    RETURN(0);
 }
 
 /// @brief Clean up a file system.
@@ -373,12 +591,81 @@ void* MyInMemoryFS::fuseInit(struct fuse_conn_info *conn) {
 /// This function is called when the file system is unmounted. You may add some cleanup code here.
 void MyInMemoryFS::fuseDestroy() {
     LOGM();
-
-    // TODO: [PART 1] Implement this!
-
 }
 
 // TODO: [PART 1] You may add your own additional methods here!
+
+/**
+ *  Returns the index of a given file
+ * @param path - path of file
+ * @return index
+ */
+int MyInMemoryFS::get_index(const char *path) const {
+    // Ignore '/' at the beginning of file path
+    path++;
+    for (size_t i = 0; i < NUM_DIR_ENTRIES; i++) {
+        if (files[i].name[0] != '\0' && strcmp(path, files[i].name) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Returns index of the next free slot for creating an item
+ *
+ * @return
+ */
+int MyInMemoryFS::get_next_free_index() const {
+    for (size_t i = 0; i < NUM_DIR_ENTRIES; i++) {
+        if (files[i].name[0] == '\0') {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Returns index of the next files
+ *    ENOENT : No such file or Directory code
+ * @return
+ */
+int MyInMemoryFS::get_next_free_index_files() const {
+    for (size_t i = 0; i < NUM_OPEN_FILES; i++) {
+        if (open_files[i] == -ENOENT) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int MyInMemoryFS::truncate(uint16_t file_index, off_t new_size) const {
+
+    // If file is already of the suitable size
+    if (files[file_index].size == new_size) {
+        LOG("File is already with suitable size.");
+        RETURN(666);
+    }
+    uint32_t old_size = files[file_index].size;
+    files[file_index].size = new_size;
+    files[file_index].data = (char *) (realloc(files[file_index].data, new_size));
+
+    // If new_size is bigger than old - fill it with '\0'
+    if (new_size > old_size) {
+        uint32_t diff = new_size - old_size;
+        uint32_t offset = new_size - diff;
+        for (size_t i = 0; i < diff; i++) {
+            files[file_index].data[offset + i] = '\0';
+        }
+    }
+    time(&(files[file_index].mtime));
+    time(&(files[file_index].ctime));
+
+    LOG("File is truncated.");
+    RETURN(0);
+}
+
+
 
 // DO NOT EDIT ANYTHING BELOW THIS LINE!!!
 
