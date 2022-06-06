@@ -7,20 +7,24 @@
 #define MYFS_MYONDISKFS_H
 
 #include "myfs.h"
+#include "RootDir.h"
+#include "DMAP.h"
+#include "FAT.h"
 
 /// @brief On-disk implementation of a simple file system.
 class MyOnDiskFS : public MyFS {
 protected:
-    // BlockDevice blockDevice;
+     BlockDevice *blockDevice;
+     char *buffer;
+     RootDir *rootDir;
+     DMAP *dmap;
+     FAT *fat;
+
+     int open_files_count = 0;
+     BlockCache *open_files[NUM_OPEN_FILES];
 
 public:
     static MyOnDiskFS *Instance();
-
-    MyFsNode *files;
-    uint32_t *open_files;
-    int open_files_count = 0;
-
-    // TODO: [PART 1] Add attributes of your file system here
 
     MyOnDiskFS();
     ~MyOnDiskFS();
@@ -45,12 +49,9 @@ public:
     virtual int fuseTruncate(const char *path, off_t offset, struct fuse_file_info *fileInfo);
     virtual void fuseDestroy();
 
-    // TODO: Add methods of your file system here
-
-    uint16_t get_index(const char *path);
-    uint16_t get_next_free_index();
-    uint16_t get_next_free_index_files();
-    uint16_t truncate(uint16_t file_index, off_t new_size);
+    int get_next_free_index_opened_files();
+    int read_file(int *blocks, int block_count, int offset, size_t size, char *buffer, BlockCache *open_file);
+    int write_file(int *blocks, int block_count, int offset, size_t size, char *buffer, BlockCache *open_file);
 };
 
 #endif //MYFS_MYONDISKFS_H
