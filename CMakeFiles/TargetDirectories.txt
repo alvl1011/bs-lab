@@ -1,5 +1,0 @@
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/CMakeFiles/edit_cache.dir
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/CMakeFiles/integrationtests.dir
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/CMakeFiles/unittests.dir
-/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/CMakeFiles/mount.myfs.dir

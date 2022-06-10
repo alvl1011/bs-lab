@@ -11,7 +11,7 @@
 class RootDir {
 private:
     BlockDevice *blockDevice;
-    RootFile* existing_files[NUM_DIR_ENTRIES];
+    RootFile* existing_files[NUM_DIR_ENTRIES]{};
     int existing_files_counter = 0;
 
 public:
@@ -26,10 +26,12 @@ public:
 
     RootFile* load(int index);
 
-    bool persist(RootFile *file);
+    void save_on_disk(RootFile *file);
 
     void init_root_dir();
     void first_init_root_dir();
+
+    bool save_on_disk();
 };
 
 #endif //MYFS_ROOTDIR_H
