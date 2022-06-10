@@ -255,6 +255,10 @@ int MyInMemoryFS::fuseChmod(const char *path, mode_t mode) {
 ///
 /// Change the user and group identifier in the meta data of a file.
 /// You do not have to check file permissions, but can assume that it is always ok to access the file.
+///
+/// If gid is more than 100000 no group was given to chown so don't edit the edit the gid of the file
+///
+///
 /// \param [in] path Name of the file, starting with "/".
 /// \param [in] uid New user id.
 /// \param [in] gid New group id.

@@ -333,3 +333,15 @@ void MyOnDiskFS::fuseDestroy() {
 void MyOnDiskFS::SetInstance() {
     MyFS::_instance= new MyOnDiskFS();
 }
+
+int MyOnDiskFS::get_next_free_index_opened_files() {
+    return 0;
+}
+
+int MyOnDiskFS::read_file(int *blocks, int block_count, int offset, size_t size, char *buffer, BlockCache *open_file) {
+    return 0;
+}
+
+int MyOnDiskFS::write_file(int *blocks, int block_count, int offset, size_t size, char *buffer, BlockCache *open_file) {
+    return 0;
+}
