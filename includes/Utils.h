@@ -8,7 +8,7 @@
 
 class Utils {
 public:
-    static bool checkContent(char buffer[]);
+    static bool checkContent(const char buffer[]);
 };
 
 #endif //MYFS_UTILS_H
