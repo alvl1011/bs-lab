@@ -149,6 +149,138 @@ mount.myfs/fast:
 	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/build
 .PHONY : mount.myfs/fast
 
+src/DMAP.o: src/DMAP.cpp.o
+
+.PHONY : src/DMAP.o
+
+# target to build an object file
+src/DMAP.cpp.o:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/DMAP.cpp.o
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/DMAP.cpp.o
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/DMAP.cpp.o
+.PHONY : src/DMAP.cpp.o
+
+src/DMAP.i: src/DMAP.cpp.i
+
+.PHONY : src/DMAP.i
+
+# target to preprocess a source file
+src/DMAP.cpp.i:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/DMAP.cpp.i
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/DMAP.cpp.i
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/DMAP.cpp.i
+.PHONY : src/DMAP.cpp.i
+
+src/DMAP.s: src/DMAP.cpp.s
+
+.PHONY : src/DMAP.s
+
+# target to generate assembly for a file
+src/DMAP.cpp.s:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/DMAP.cpp.s
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/DMAP.cpp.s
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/DMAP.cpp.s
+.PHONY : src/DMAP.cpp.s
+
+src/FAT.o: src/FAT.cpp.o
+
+.PHONY : src/FAT.o
+
+# target to build an object file
+src/FAT.cpp.o:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/FAT.cpp.o
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/FAT.cpp.o
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/FAT.cpp.o
+.PHONY : src/FAT.cpp.o
+
+src/FAT.i: src/FAT.cpp.i
+
+.PHONY : src/FAT.i
+
+# target to preprocess a source file
+src/FAT.cpp.i:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/FAT.cpp.i
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/FAT.cpp.i
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/FAT.cpp.i
+.PHONY : src/FAT.cpp.i
+
+src/FAT.s: src/FAT.cpp.s
+
+.PHONY : src/FAT.s
+
+# target to generate assembly for a file
+src/FAT.cpp.s:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/FAT.cpp.s
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/FAT.cpp.s
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/FAT.cpp.s
+.PHONY : src/FAT.cpp.s
+
+src/RootDir.o: src/RootDir.cpp.o
+
+.PHONY : src/RootDir.o
+
+# target to build an object file
+src/RootDir.cpp.o:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/RootDir.cpp.o
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/RootDir.cpp.o
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/RootDir.cpp.o
+.PHONY : src/RootDir.cpp.o
+
+src/RootDir.i: src/RootDir.cpp.i
+
+.PHONY : src/RootDir.i
+
+# target to preprocess a source file
+src/RootDir.cpp.i:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/RootDir.cpp.i
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/RootDir.cpp.i
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/RootDir.cpp.i
+.PHONY : src/RootDir.cpp.i
+
+src/RootDir.s: src/RootDir.cpp.s
+
+.PHONY : src/RootDir.s
+
+# target to generate assembly for a file
+src/RootDir.cpp.s:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/RootDir.cpp.s
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/RootDir.cpp.s
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/RootDir.cpp.s
+.PHONY : src/RootDir.cpp.s
+
+src/Utils.o: src/Utils.cpp.o
+
+.PHONY : src/Utils.o
+
+# target to build an object file
+src/Utils.cpp.o:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/Utils.cpp.o
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/Utils.cpp.o
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/Utils.cpp.o
+.PHONY : src/Utils.cpp.o
+
+src/Utils.i: src/Utils.cpp.i
+
+.PHONY : src/Utils.i
+
+# target to preprocess a source file
+src/Utils.cpp.i:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/Utils.cpp.i
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/Utils.cpp.i
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/Utils.cpp.i
+.PHONY : src/Utils.cpp.i
+
+src/Utils.s: src/Utils.cpp.s
+
+.PHONY : src/Utils.s
+
+# target to generate assembly for a file
+src/Utils.cpp.s:
+	$(MAKE) -f CMakeFiles/integrationtests.dir/build.make CMakeFiles/integrationtests.dir/src/Utils.cpp.s
+	$(MAKE) -f CMakeFiles/unittests.dir/build.make CMakeFiles/unittests.dir/src/Utils.cpp.s
+	$(MAKE) -f CMakeFiles/mount.myfs.dir/build.make CMakeFiles/mount.myfs.dir/src/Utils.cpp.s
+.PHONY : src/Utils.cpp.s
+
 src/blockdevice.o: src/blockdevice.cpp.o
 
 .PHONY : src/blockdevice.o
@@ -490,6 +622,18 @@ help:
 	@echo "... integrationtests"
 	@echo "... unittests"
 	@echo "... mount.myfs"
+	@echo "... src/DMAP.o"
+	@echo "... src/DMAP.i"
+	@echo "... src/DMAP.s"
+	@echo "... src/FAT.o"
+	@echo "... src/FAT.i"
+	@echo "... src/FAT.s"
+	@echo "... src/RootDir.o"
+	@echo "... src/RootDir.i"
+	@echo "... src/RootDir.s"
+	@echo "... src/Utils.o"
+	@echo "... src/Utils.i"
+	@echo "... src/Utils.s"
 	@echo "... src/blockdevice.o"
 	@echo "... src/blockdevice.i"
 	@echo "... src/blockdevice.s"

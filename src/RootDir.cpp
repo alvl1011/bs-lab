@@ -24,7 +24,7 @@ RootDir::~RootDir() = default;
  * @param path
  * @return RootFile*
  */
-RootFile* RootDir::create_file(const char *path) {
+RootFile* RootDir::create_file(const char *path, mode_t mode = S_IFREG | 0644) {
     path++;// due to slash
 
     int index = 0;
@@ -34,7 +34,7 @@ RootFile* RootDir::create_file(const char *path) {
     auto *file = new RootFile();
 
     strcpy(file->name, path);
-    file->stat.st_mode = S_IFREG | 0644;
+    file->stat.st_mode = mode;
     file->stat.st_blksize = BLOCK_SIZE;
     file->stat.st_size = 0;
     file->stat.st_blocks = 0;

@@ -18,7 +18,7 @@ public:
     RootDir(BlockDevice *device);
     ~RootDir();
 
-    RootFile* create_file(const char *path);
+    RootFile* create_file(const char *path, mode_t mode);
     void delete_file(RootFile *file);
 
     RootFile* get_file(const char *path);

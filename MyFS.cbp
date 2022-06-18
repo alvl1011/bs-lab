@@ -11,30 +11,30 @@
 				<Option working_dir="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="integrationtests">
@@ -46,12 +46,19 @@
 				<Compiler>
 					<Add directory="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/includes"/>
 					<Add directory="/usr/include/fuse"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 integrationtests"/>
-					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 integrationtests"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="integrationtests/fast">
@@ -63,12 +70,19 @@
 				<Compiler>
 					<Add directory="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/includes"/>
 					<Add directory="/usr/include/fuse"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 integrationtests/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 integrationtests/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="unittests">
@@ -80,12 +94,19 @@
 				<Compiler>
 					<Add directory="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/includes"/>
 					<Add directory="/usr/include/fuse"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 unittests"/>
-					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 unittests"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="unittests/fast">
@@ -97,12 +118,19 @@
 				<Compiler>
 					<Add directory="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/includes"/>
 					<Add directory="/usr/include/fuse"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 unittests/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 unittests/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="mount.myfs">
@@ -114,12 +142,19 @@
 				<Compiler>
 					<Add directory="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/includes"/>
 					<Add directory="/usr/include/fuse"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 mount.myfs"/>
-					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 mount.myfs"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="mount.myfs/fast">
@@ -131,15 +166,42 @@
 				<Compiler>
 					<Add directory="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/includes"/>
 					<Add directory="/usr/include/fuse"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 mount.myfs/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 mount.myfs/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/DMAP.cpp">
+			<Option target="integrationtests"/>
+			<Option target="unittests"/>
+			<Option target="mount.myfs"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/FAT.cpp">
+			<Option target="integrationtests"/>
+			<Option target="unittests"/>
+			<Option target="mount.myfs"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/RootDir.cpp">
+			<Option target="integrationtests"/>
+			<Option target="unittests"/>
+			<Option target="mount.myfs"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/Utils.cpp">
+			<Option target="integrationtests"/>
+			<Option target="unittests"/>
+			<Option target="mount.myfs"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/vovaa/Documents/bs-lab/bs-lab/src/blockdevice.cpp">
 			<Option target="integrationtests"/>
 			<Option target="unittests"/>
