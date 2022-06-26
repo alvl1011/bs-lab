@@ -599,11 +599,9 @@ void MyInMemoryFS::fuseDestroy() {
 
 // TODO: [PART 1] You may add your own additional methods here!
 
-/**
- *  Returns the index of a given file
- * @param path - path of file
- * @return index
- */
+/// @brief  Returns the index of a given file
+/// @param path - path of file
+/// @return index or -1 if not found
 int MyInMemoryFS::get_index(const char *path) const {
     // Ignore '/' at the beginning of file path
     path++;
@@ -615,11 +613,10 @@ int MyInMemoryFS::get_index(const char *path) const {
     return -1;
 }
 
-/**
- * Returns index of the next free slot for creating an item
- *
- * @return
- */
+/// @brief Returns index of the next free slot for creating an item.
+///
+/// @return index or -1 if not found
+///
 int MyInMemoryFS::get_next_free_index() const {
     for (size_t i = 0; i < NUM_DIR_ENTRIES; i++) {
         if (files[i].name[0] == '\0') {
@@ -629,11 +626,10 @@ int MyInMemoryFS::get_next_free_index() const {
     return -1;
 }
 
-/**
- * Returns index of the next files
- *    ENOENT : No such file or Directory code
- * @return
- */
+/// @brief
+/// Returns index of the next files
+///   ENOENT : No such file or Directory code
+/// @return index or -1 if not found
 int MyInMemoryFS::get_next_free_index_files() const {
     for (size_t i = 0; i < NUM_OPEN_FILES; i++) {
         if (open_files[i] == -ENOENT) {
@@ -643,6 +639,8 @@ int MyInMemoryFS::get_next_free_index_files() const {
     return -1;
 }
 
+/// @brief Shrink or extend the size of a file to the specified size
+/// @param path - path of file
 int MyInMemoryFS::truncate(uint16_t file_index, off_t new_size) const {
 
     // If file is already of the suitable size

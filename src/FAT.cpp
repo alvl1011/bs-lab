@@ -4,28 +4,20 @@
 
 #include <FAT.h>
 
-/**
- * FAT constructor
- * - init blockDevice for current object
- *
- * @param blockDevice
- */
+/// @brief FAT constructor
+/// init blockDevice for current object
+/// @param blockDevice
 FAT::FAT(BlockDevice *blockDevice) {
     this->blockDevice = blockDevice;
     for(int i = 0; i < DATA_BLOCKS; i++)
         fat_array[i] = FAT_EOF;
 }
 
-/**
- * Destructor of FAT
- */
+/// @brief Destructor of FAT
 FAT::~FAT() = default;
 
-/**
- * Insert modified block in FAT
- *
- * @param index
- */
+/// @brief Insert modified block in FAT
+/// @param index
 void FAT::insert_modified_block(int index) {
     // verify that index is not present already
     bool isPresent = false;
@@ -40,22 +32,17 @@ void FAT::insert_modified_block(int index) {
     }
 }
 
-/**
- * Clears modified blocks
- */
+/// @brief Clears modified blocks
 void FAT::clear_modified_blocks() {
     for(int i = 0; i < modifiedBlocksCounter; i++)
         modifiedBlocks[i] = 0;
     modifiedBlocksCounter = 0;
 }
 
-/**
- * Set next block in FAT array
- *
- * @param currentBlock
- * @param nextBlock
- * @return
- */
+/// @brief Set next block in FAT array
+/// @param currentBlock
+/// @param nextBlock
+/// @return 0 if successful -1 if not
 int FAT::set_next_block(int currentBlock, int nextBlock) {
 
     if(currentBlock == nextBlock)
@@ -66,29 +53,21 @@ int FAT::set_next_block(int currentBlock, int nextBlock) {
     return 0;
 }
 
-/**
- * Get index of the next block
- *
- * @param currentBlock
- * @return
- */
+/// @brief Get index of the next block
+/// @param currentBlock
+/// @return index
 int FAT::get_next_block(int currentBlock) {
     return this->fat_array[currentBlock];
 }
 
-/**
- * Frees block in FAT array
- *
- * @param index
- */
+/// @brief Frees block in FAT array
+/// @param index
 void FAT::free_block(int index) {
     this->fat_array[index] = FAT_EOF;
     insert_modified_block(index);
 }
 
-/**
- * Write changes to disk
- */
+/// @brief Write changes to disk
 void FAT::save_on_disk() {
     char buffer[BLOCK_SIZE];
 
@@ -130,9 +109,7 @@ void FAT::save_on_disk() {
     clear_modified_blocks();
 }
 
-/**
- * Initialise the FAT(existing)
- */
+///@brief Initialise the FAT(existing)
 void FAT::init_fat() {
     char buffer[BLOCK_SIZE];
     for(int i = 0; i < FAT_SIZE; i++) {
@@ -142,9 +119,8 @@ void FAT::init_fat() {
     }
 }
 
-/**
- * Initialise the FAT
- */
+
+///@brief Initialise the FAT
 void FAT::first_init_fat() {
     char buffer[BLOCK_SIZE];
     for(int i = 0; i < FAT_SIZE; i++) {

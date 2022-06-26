@@ -4,12 +4,9 @@
 
 #include <Utils.h>
 
-/**
- * Goes over a buffer to go over all of the block bits and check if
- * content is zero
- * @param buffer
- * @return true|false - if the block is empty - full of zeros or not
- */
+/// @brief Goes over a buffer to go over all of the block bits and check if content is zero
+/// @param buffer
+/// @return true|false - if the block is empty - full of zeros or not
 bool Utils::checkContent(const char *buffer) {
 
     // goes over every byte from blockDevice

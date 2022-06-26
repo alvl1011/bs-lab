@@ -4,12 +4,10 @@
 
 #include <DMAP.h>
 
-/**
- * DMAP constructor
- * - init blockDevice for current object
- *
- * @param blockDevice
- */
+/// @brief DMAP constructor
+/// init blockDevice for current object
+/// @param blockDevice
+
 DMAP::DMAP(BlockDevice *blockDevice) {
     this->blockDevice = blockDevice;
     for (bool & block : this->blocks) {
@@ -17,16 +15,13 @@ DMAP::DMAP(BlockDevice *blockDevice) {
     }
 }
 
-/**
- * Destructor of DMAP
- */
+
+/// @brief Destructor of DMAP
 DMAP::~DMAP() = default;
 
-/**
- * Get next free block available
- *
- * @return int
- */
+
+/// Get next free block available
+/// @return int free-block or -1 if free-block not found
 int DMAP::get_next_free_block() {
     for(int i = 0; i < DATA_BLOCKS; i++) {
         if(!get_block_state(i)) {
@@ -37,12 +32,9 @@ int DMAP::get_next_free_block() {
     return -1;
 }
 
-/**
- * Get array of indexes of set amount of data blocks
- *
- * @param amount
- * @return int[amount]
- */
+/// @brief Get array of indexes of set amount of data blocks
+/// @param amount
+/// @return int[amount]
 int* DMAP::get_amount_free_blocks(int amount) {
     int* free_blocks = new int[amount];
 
@@ -56,29 +48,21 @@ int* DMAP::get_amount_free_blocks(int amount) {
     return free_blocks;
 }
 
-/**
- * Set usage status of data block to true or false
- * If in use or not
- */
+/// @brief Set usage status of data block to true or false if in use or not
+
 void DMAP::set_block_state(size_t dataBlockNumber, bool isUsed) {
     this->blocks[dataBlockNumber] = isUsed;
     if(isUsed) this->blockInUseCounter++;
     else this->blockInUseCounter--;
 }
 
-/**
- * Get the usage status of data block
- * @return true|false
- */
+/// @brief Get the usage status of data block
+/// @return true|false
 bool DMAP::get_block_state(size_t dataBlockNumber) {
     return this->blocks[dataBlockNumber];
 }
 
-/**
- * Write changes to disk
- *
- * @return true
- */
+/// @brief Write changes to disk
 void DMAP::save_on_disk() {
     char buffer[BLOCK_SIZE];
 
@@ -103,9 +87,7 @@ void DMAP::save_on_disk() {
     }
 }
 
-/**
- * Initialise the DMAP(existing) and check current available blocks
- */
+/// @brief Initialise the DMAP(existing) and check current available blocks
 void DMAP::init_dmap() {
 
     char buffer[BLOCK_SIZE];
@@ -135,9 +117,7 @@ void DMAP::init_dmap() {
     }
 }
 
-/**
- * Initialize for empty file system
- */
+/// @brief Initialize for empty file system
 void DMAP::first_init_dmap() {
     char buffer[BLOCK_SIZE];
     for(int i = 0; i < DMAP_SIZE; i++) {

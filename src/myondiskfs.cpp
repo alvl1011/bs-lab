@@ -765,6 +765,7 @@ void MyOnDiskFS::SetInstance() {
     MyFS::_instance= new MyOnDiskFS();
 }
 
+/// @brief Check if the next index in the File-block is open.
 int MyOnDiskFS::get_next_free_index_opened_files() {
     for (int i = 0; i < NUM_OPEN_FILES; i++)
     {
