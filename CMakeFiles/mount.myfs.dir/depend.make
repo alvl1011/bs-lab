@@ -10,6 +10,28 @@ CMakeFiles/mount.myfs.dir/src/mount.myfs.c.o: /usr/include/fuse/fuse_opt.h
 CMakeFiles/mount.myfs.dir/src/mount.myfs.c.o: includes/myfs-info.h
 CMakeFiles/mount.myfs.dir/src/mount.myfs.c.o: includes/wrap.h
 
+CMakeFiles/mount.myfs.dir/src/DMAP.cpp.o: src/DMAP.cpp
+CMakeFiles/mount.myfs.dir/src/DMAP.cpp.o: includes/DMAP.h
+CMakeFiles/mount.myfs.dir/src/DMAP.cpp.o: includes/Utils.h
+CMakeFiles/mount.myfs.dir/src/DMAP.cpp.o: includes/blockdevice.h
+CMakeFiles/mount.myfs.dir/src/DMAP.cpp.o: includes/myfs-structs.h
+
+CMakeFiles/mount.myfs.dir/src/FAT.cpp.o: src/FAT.cpp
+CMakeFiles/mount.myfs.dir/src/FAT.cpp.o: includes/FAT.h
+CMakeFiles/mount.myfs.dir/src/FAT.cpp.o: includes/blockdevice.h
+CMakeFiles/mount.myfs.dir/src/FAT.cpp.o: includes/myfs-structs.h
+
+CMakeFiles/mount.myfs.dir/src/RootDir.cpp.o: src/RootDir.cpp
+CMakeFiles/mount.myfs.dir/src/RootDir.cpp.o: includes/RootDir.h
+CMakeFiles/mount.myfs.dir/src/RootDir.cpp.o: includes/Utils.h
+CMakeFiles/mount.myfs.dir/src/RootDir.cpp.o: includes/blockdevice.h
+CMakeFiles/mount.myfs.dir/src/RootDir.cpp.o: includes/myfs-structs.h
+
+CMakeFiles/mount.myfs.dir/src/Utils.cpp.o: src/Utils.cpp
+CMakeFiles/mount.myfs.dir/src/Utils.cpp.o: includes/Utils.h
+CMakeFiles/mount.myfs.dir/src/Utils.cpp.o: includes/blockdevice.h
+CMakeFiles/mount.myfs.dir/src/Utils.cpp.o: includes/myfs-structs.h
+
 CMakeFiles/mount.myfs.dir/src/blockdevice.cpp.o: src/blockdevice.cpp
 CMakeFiles/mount.myfs.dir/src/blockdevice.cpp.o: includes/blockdevice.h
 CMakeFiles/mount.myfs.dir/src/blockdevice.cpp.o: includes/macros.h
@@ -45,6 +67,10 @@ CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: /usr/include/fuse/fuse_common.h
 CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: /usr/include/fuse/fuse_common_compat.h
 CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: /usr/include/fuse/fuse_compat.h
 CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: /usr/include/fuse/fuse_opt.h
+CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: includes/DMAP.h
+CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: includes/FAT.h
+CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: includes/RootDir.h
+CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: includes/Utils.h
 CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: includes/blockdevice.h
 CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: includes/macros.h
 CMakeFiles/mount.myfs.dir/src/myondiskfs.cpp.o: includes/myfs-info.h
@@ -58,6 +84,10 @@ CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: /usr/include/fuse/fuse_common.h
 CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: /usr/include/fuse/fuse_common_compat.h
 CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: /usr/include/fuse/fuse_compat.h
 CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: /usr/include/fuse/fuse_opt.h
+CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: includes/DMAP.h
+CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: includes/FAT.h
+CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: includes/RootDir.h
+CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: includes/Utils.h
 CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: includes/blockdevice.h
 CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: includes/myfs-structs.h
 CMakeFiles/mount.myfs.dir/src/wrap.cpp.o: includes/myfs.h

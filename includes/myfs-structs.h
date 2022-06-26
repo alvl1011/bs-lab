@@ -27,7 +27,7 @@
 #define DMAP_SIZE 512
 
 #define FAT_OFFSET DMAP_OFFSET + DMAP_SIZE
-#define FAT_SIZE
+#define FAT_SIZE 2048
 #define FAT_EOF -1         // value of terminator, to make a last block of a file
 
 #define ROOT_DIR_OFFSET FAT_OFFSET + FAT_SIZE
