@@ -17,7 +17,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#include <exception>
 
 #include "macros.h"
 #include "myfs.h"
@@ -58,26 +57,21 @@ MyOnDiskFS::~MyOnDiskFS() {
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseMknod(const char *path, mode_t mode, dev_t dev) {
     LOGM();
-    try {
-        if (strlen(path) > NAME_LENGTH) {
-            LOG("Filename is too long.");
-            RETURN(-ENAMETOOLONG);
-        }
-
-        if (get_next_free_index_opened_files() == -1) {
-            LOG("No space left on device");
-            RETURN(-ENOSPC);
-        }
-
-        RootFile *file = rootDir->create_file(path, mode); // pointer to new file
-        this->rootDir->save_on_disk(file); // write file into container
-
-        LOG("File created successfully.");
-        RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
+    if (strlen(path) > NAME_LENGTH) {
+        LOG("Filename is too long.");
+        RETURN(-ENAMETOOLONG);
     }
+
+    if (get_next_free_index_opened_files() == -1) {
+        LOG("No space left on device");
+        RETURN(-ENOSPC);
+    }
+
+    RootFile *file = rootDir->create_file(path); // pointer to new file
+    this->rootDir->save_on_disk(file); // write file into container
+
+    LOG("File created successfully.");
+    RETURN(0);
 }
 
 /// @brief Delete a file.
@@ -88,46 +82,40 @@ int MyOnDiskFS::fuseMknod(const char *path, mode_t mode, dev_t dev) {
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseUnlink(const char *path) {
     LOGM();
-    try {
+    RootFile *file = rootDir->get_file(path); // get structure of file
 
-        RootFile *file = rootDir->get_file(path); // get structure of file
-
-        if (file == nullptr) {
-            LOG("File does not exist.");
-            RETURN(-ENOENT);
-        }
-
-        if (file->firstBlock != -1) {
-            int current_block = file->firstBlock;
-            int next_block = FAT_EOF; // For loop, since outwise it would run forever
-            do {
-                // get next block
-                next_block = fat->get_next_block(current_block);
-                // set bit to 0 to represent empty space
-                dmap->set_block_state(current_block, false);
-                // delete block
-                fat->free_block(current_block);
-                // continue until fat is not at the end
-                current_block = next_block;
-
-            } while (next_block != FAT_EOF);
-        }
-
-        dmap->save_on_disk(); // write to block device
-        fat->save_on_disk();
-
-        // clear metadata
-        char local_buffer[BLOCK_SIZE];
-        memset(local_buffer, 0, BLOCK_SIZE);
-        this->blockDevice->write(ROOT_DIR_OFFSET + file->rootDirBlock, local_buffer);
-
-        // clear file from rootdir
-        rootDir->delete_file(file);
-        RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
+    if (file == nullptr) {
+        LOG("File does not exist.");
+        RETURN(-ENOENT);
     }
+
+    if (file->firstBlock != -1) {
+        int current_block = file->firstBlock;
+        int next_block = FAT_EOF; // For loop, since outwise it would run forever
+        do {
+            // get next block
+            next_block = fat->get_next_block(current_block);
+            // set bit to 0 to represent empty space
+            dmap->set_block_state(current_block, false);
+            // delete block
+            fat->free_block(current_block);
+            // continue until fat is not at the end
+            current_block = next_block;
+
+        } while (next_block != FAT_EOF);
+    }
+
+    dmap->save_on_disk(); // write to block device
+    fat->save_on_disk();
+
+    // clear metadata
+    char local_buffer[BLOCK_SIZE];
+    memset(local_buffer, 0, BLOCK_SIZE);
+    this->blockDevice->write(ROOT_DIR_OFFSET + file->rootDirBlock, local_buffer);
+
+    // clear file from rootdir
+    rootDir->delete_file(file);
+    RETURN(0);
 }
 
 /// @brief Rename a file.
@@ -141,33 +129,27 @@ int MyOnDiskFS::fuseUnlink(const char *path) {
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseRename(const char *path, const char *newpath) {
     LOGM();
-    try {
-
-        // name length
-        if(strlen(newpath + 1) > NAME_LENGTH) {
-            RETURN(-ENAMETOOLONG);
-        }
-
-        RootFile *file = rootDir->get_file(path);
-        // if file does not exist
-        if (file == nullptr) {
-            RETURN(-ENOENT);
-        }
-
-        // if file exists
-        if(rootDir->get_file(newpath) != nullptr) {
-            RETURN(-EEXIST);
-        }
-
-        strcpy(file->name, newpath + 1);
-        rootDir->save_on_disk(file); // save new file, filename changed
-
-        LOG("File renamed successfully.");
-        RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
+    // name length
+    if(strlen(newpath + 1) > NAME_LENGTH) {
+        RETURN(-ENAMETOOLONG);
     }
+
+    RootFile *file = rootDir->get_file(path);
+    // if file does not exist
+    if (file == nullptr) {
+        RETURN(-ENOENT);
+    }
+
+    // if file exists
+    if(rootDir->get_file(newpath) != nullptr) {
+        RETURN(-EEXIST);
+    }
+
+    strcpy(file->name, newpath + 1);
+    rootDir->save_on_disk(file); // save new file, filename changed
+
+    LOG("File renamed successfully.");
+    RETURN(0);
 }
 
 /// @brief Get file meta data.
@@ -178,32 +160,26 @@ int MyOnDiskFS::fuseRename(const char *path, const char *newpath) {
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseGetattr(const char *path, struct stat *statbuf) {
     LOGM();
-    try {
-
-        // get metadata from old folder
-        if(strcmp(path, "/") == 0) {
-            statbuf->st_mode = S_IFDIR | 0755;
-            statbuf->st_nlink = 2;
-            statbuf->st_uid = getuid();
-            statbuf->st_gid = getgid();
-            statbuf->st_atime = time(nullptr);
-            statbuf->st_mtime = time(nullptr);
-            RETURN(0);
-        }
-
-        // if requested path is not root "/" get file through path
-        RootFile *file = rootDir->get_file(path);
-
-        if(file == nullptr) {
-            RETURN(-ENOENT);
-        }
-        // copy new struct into buffer
-        memcpy(statbuf, &file->stat, sizeof(*statbuf));
+    // get metadata from old folder
+    if(strcmp(path, "/") == 0) {
+        statbuf->st_mode = S_IFDIR | 0755;
+        statbuf->st_nlink = 2;
+        statbuf->st_uid = getuid();
+        statbuf->st_gid = getgid();
+        statbuf->st_atime = time(nullptr);
+        statbuf->st_mtime = time(nullptr);
         RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
     }
+
+    // if requested path is not root "/" get file through path
+    RootFile *file = rootDir->get_file(path);
+
+    if(file == nullptr) {
+        RETURN(-ENOENT);
+    }
+    // copy new struct into buffer
+    memcpy(statbuf, &file->stat, sizeof(*statbuf));
+    RETURN(0);
 }
 
 /// @brief Change file permissions.
@@ -215,22 +191,17 @@ int MyOnDiskFS::fuseGetattr(const char *path, struct stat *statbuf) {
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseChmod(const char *path, mode_t mode) {
     LOGM();
-    try {
-        RootFile *file = rootDir->get_file(path);
+    RootFile *file = rootDir->get_file(path);
 
-        if (file == nullptr) {
-            RETURN(-ENOENT);
-        }
-
-        file->stat.st_mode = mode;
-        rootDir->save_on_disk(file);
-
-        LOG("File mode changed successfully.");
-        RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
+    if (file == nullptr) {
+        RETURN(-ENOENT);
     }
+
+    file->stat.st_mode = mode;
+    rootDir->save_on_disk(file);
+
+    LOG("File mode changed successfully.");
+    RETURN(0);
 }
 
 /// @brief Change the owner of a file.
@@ -243,23 +214,18 @@ int MyOnDiskFS::fuseChmod(const char *path, mode_t mode) {
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseChown(const char *path, uid_t uid, gid_t gid) {
     LOGM();
-    try {
-        RootFile *file = rootDir->get_file(path);
+    RootFile *file = rootDir->get_file(path);
 
-        if (file == nullptr) {
-            RETURN(-ENOENT);
-        }
-
-        file->stat.st_uid = uid;
-        file->stat.st_gid = gid;
-        rootDir->save_on_disk(file);
-
-        LOG("User and group identifier changed successfully.");
-        RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
+    if (file == nullptr) {
+        RETURN(-ENOENT);
     }
+
+    file->stat.st_uid = uid;
+    file->stat.st_gid = gid;
+    rootDir->save_on_disk(file);
+
+    LOG("User and group identifier changed successfully.");
+    RETURN(0);
 }
 
 /// @brief Open a file.
@@ -272,37 +238,32 @@ int MyOnDiskFS::fuseChown(const char *path, uid_t uid, gid_t gid) {
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseOpen(const char *path, struct fuse_file_info *fileInfo) {
     LOGM();
-    try {
-        // if other open file is allowed
-        if (open_files_count == NUM_OPEN_FILES) {
-            RETURN(-EMFILE);
-        }
-
-        RootFile *file = rootDir->get_file(path);
-
-        if (file == nullptr) {
-            RETURN(-ENOENT);
-        }
-
-        open_files_count++;
-
-        int open_file_index = get_next_free_index_opened_files();
-
-        // create a new open file object from file specified by the path
-        auto *open_file = new ::BlockCache();
-        open_file->rootFile = file;
-
-        // add to open files
-        open_files[open_file_index] = open_file;
-
-        // update index in fuse file object
-        fileInfo->fh = open_file_index;
-
-        RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
+    // if other open file is allowed
+    if (open_files_count == NUM_OPEN_FILES) {
+        RETURN(-EMFILE);
     }
+
+    RootFile *file = rootDir->get_file(path);
+
+    if (file == nullptr) {
+        RETURN(-ENOENT);
+    }
+
+    open_files_count++;
+
+    int open_file_index = get_next_free_index_opened_files();
+
+    // create a new open file object from file specified by the path
+    BlockCache *open_file = new ::BlockCache();
+    open_file->rootFile = file;
+
+    // add to open files
+    open_files[open_file_index] = open_file;
+
+    // update index in fuse file object
+    fileInfo->fh = open_file_index;
+
+    RETURN(0);
 }
 
 /// @brief Read from a file.
@@ -324,79 +285,78 @@ int MyOnDiskFS::fuseOpen(const char *path, struct fuse_file_info *fileInfo) {
 /// -ERRNO on failure.
 int MyOnDiskFS::fuseRead(const char *path, char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo) {
     LOGM();
-    try {
-        // check whether there is an open file
-        if (open_files[fileInfo->fh] == nullptr) {
-            LOG("Bad file number");
-            RETURN(-EBADF);
-        }
-
-        // if is opened write it to the root file obj
-        RootFile *file = open_files[fileInfo->fh]->rootFile;
-
-        // Nothing to read because user wants to read outside of file content
-        // Example: file has 5 lines, user wants to start to read at line 6
-        if (offset >= file->stat.st_size) {
-            RETURN(0);
-        }
-
-        // offset is in range but size (amount of bytes to read) is too big,
-        // we only want to read in the defined file and not outside
-        // Example: file has 5 lines, user wants to read lines 2 to 6. User only gets to read lines 2 to 5
-        if ((off_t)(offset + size) > file->stat.st_size) {
-            size = file->stat.st_size - offset;
-        }
-
-        // number of blocks to read
-        int block_count;
-
-        // calculate number of blocks to read
-        if (size % BLOCK_SIZE == 0) {
-            // file size is exactly multiple of BLOCK_SIZE
-            block_count = (int) size / BLOCK_SIZE;
-        }
-        else {
-            // +1 to read the next block too
-            block_count = (int) size / BLOCK_SIZE + 1;
-        }
-
-        // if offset is bigger than BLOCK_SIZE we read some block in the chain,
-        // determine how many blocks we need to skip
-        int block_offset = (int) offset / BLOCK_SIZE;
-
-        // skip blocks
-        int currentBlock = file->firstBlock;
-        for (int i = 0; i < block_offset; i++) {
-            currentBlock = fat->get_next_block(currentBlock);
-        }
-
-        // construct chain of blocks that need to be read
-        int *blocks = new int[block_count];
-        blocks[0] = currentBlock;
-        for (int i = 1; i < block_count; i++) {
-            //get the next block from FAT
-            currentBlock = fat->get_next_block(currentBlock);
-            blocks[i] = currentBlock;
-        }
-
-        // read file
-        int err = read_file(blocks, block_count, (int) offset % BLOCK_SIZE, size, buf, open_files[fileInfo->fh]);
-
-        // update file because of the new a_time
-        file->stat.st_atime = time(nullptr);
-
-        // update a_time in the rootDir
-        this->rootDir->save_on_disk(file);
-
-        // we do not want to store temp blocks
-        delete[] blocks;
-
-        // return amount of bytes to read
-        RETURN((int) size);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
+    // check whether there is an open file
+    if (open_files[fileInfo->fh] == nullptr) {
+        LOG("Bad file number");
+        RETURN(-EBADF);
     }
+
+    // if is opened write it to the root file obj
+    RootFile *file = open_files[fileInfo->fh]->rootFile;
+
+    // Nothing to read because user wants to read outside of file content
+    // Example: file has 5 lines, user wants to start to read at line 6
+    if (offset >= file->stat.st_size) {
+        RETURN(0);
+    }
+
+    // offset is in range but size (amount of bytes to read) is too big,
+    // we only want to read in the defined file and not outside
+    // Example: file has 5 lines, user wants to read lines 2 to 6. User only gets to read lines 2 to 5
+    if ((off_t)(offset + size) > file->stat.st_size) {
+        size = file->stat.st_size - offset;
+    }
+
+    // number of blocks to read
+    int block_count;
+
+    // calculate number of blocks to read
+    if (size % BLOCK_SIZE == 0) {
+        // file size is exactly multiple of BLOCK_SIZE
+        block_count = size / BLOCK_SIZE;
+    }
+    else {
+        // +1 to read the next block too
+        block_count = size / BLOCK_SIZE + 1;
+    }
+
+    // if offset is bigger than BLOCK_SIZE we read some block in the chain,
+    // determine how many blocks we need to skip
+    int block_offset = offset / BLOCK_SIZE;
+
+    // skip blocks
+    int currentBlock = file->firstBlock;
+    for (int i = 0; i < block_offset; i++) {
+        currentBlock = fat->get_next_block(currentBlock);
+    }
+
+    // construct chain of blocks that need to be read
+    int *blocks = new int[block_count];
+    blocks[0] = currentBlock;
+    for (int i = 1; i < block_count; i++) {
+        //get the next block from FAT
+        currentBlock = fat->get_next_block(currentBlock);
+        blocks[i] = currentBlock;
+    }
+
+    // read file
+    int err = read_file(blocks, block_count, offset % BLOCK_SIZE, size, buf, open_files[fileInfo->fh]);
+
+    if (err != 0) {
+        return -EIO;
+    }
+
+    // update file because of the new a_time
+    file->stat.st_atime = time(nullptr);
+
+    // update a_time in the rootDir
+    this->rootDir->save_on_disk(file);
+
+    // we do not want to store temp blocks
+    delete[] blocks;
+
+    // return amount of bytes to read
+    RETURN(size);
 }
 
 /// @brief Write to a file.
@@ -416,99 +376,93 @@ int MyOnDiskFS::fuseRead(const char *path, char *buf, size_t size, off_t offset,
 /// \return Number of bytes written on success, -ERRNO on failure.
 int MyOnDiskFS::fuseWrite(const char *path, const char *buf, size_t size, off_t offset, struct fuse_file_info *fileInfo) {
     LOGM();
-    try {
-
-        // is file opened
-        if (open_files[fileInfo->fh] == nullptr) {
-            RETURN(-EBADF);
-        }
-        RootFile *file = open_files[fileInfo->fh]->rootFile;
-
-        // collect info about how many and which blocks
-        // use to store data to be written
-
-        // number of blocks to write
-        int block_count;
-        if (size % BLOCK_SIZE == 0)
-            block_count = (int) size / BLOCK_SIZE;
-        else
-            block_count = (int) size / BLOCK_SIZE + 1;
-
-        // offset block for starting writing on existing files
-        int block_offset = (int) offset / BLOCK_SIZE;
-        // if existing files is get bigger append to existing block
-        int delta_count_block = block_offset + block_count - file->stat.st_blocks;
-
-        // if we need new block
-        if (delta_count_block > 0) {
-            // create array of free blocks according to size of data
-            // mark blocks as used
-            int *new_blocks = dmap->get_amount_free_blocks(block_count);
-
-            // is file new or empty
-            if (file->firstBlock == -1)
-                file->firstBlock = new_blocks[0];
-            else {
-                // editing existing file
-                // append last block of file to new_blocks
-                int current_block = file->firstBlock;
-                // get end of chain
-                while (fat->get_next_block(current_block) != FAT_EOF)
-                    current_block = fat->get_next_block(current_block);
-                fat->set_next_block(current_block, new_blocks[0]);
-            }
-
-            // store chain of blocks in FAT
-            for (size_t i = 0; i < block_count; i++)
-                fat->set_next_block(new_blocks[i - 1], new_blocks[i]);
-
-            delete[] new_blocks;
-            file->stat.st_blocks = block_count + block_offset;
-        }
-
-        // write size of new file
-        if ((off_t)(offset + size) > file->stat.st_size)
-            file->stat.st_size = offset + size;
-
-        int current_block = file->firstBlock;
-
-        // move to offset in case of writing to existing file
-        for (size_t i = 0; i <= block_offset; i++) {
-            int next_block_index = fat->get_next_block(current_block);
-            if (next_block_index != FAT_EOF)
-                current_block = next_block_index;
-        }
-
-        // collect block for writing
-        int *blocks = new int[block_count];
-        blocks[0] = current_block;
-        for (size_t i = 0; i < delta_count_block; i++) {
-            current_block = fat->get_next_block(current_block);
-            blocks[i] = current_block;
-        }
-
-        // pass in function to write blocks
-        int written = write_file(blocks, block_count, offset % BLOCK_SIZE, size, const_cast<char *>(buf), open_files[fileInfo->fh]);
-
-        if (written != 0) {
-            RETURN(-EIO);
-        }
-
-        // set new timestamps
-        file->stat.st_mtime = time(nullptr);
-        file->stat.st_ctime = time(nullptr);
-
-        // save on disk
-        dmap->save_on_disk();
-        fat->save_on_disk();
-        rootDir->save_on_disk(file);
-
-        LOG("File was written.");
-        RETURN((int) size);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
+    // is file opened
+    if (open_files[fileInfo->fh] == nullptr) {
+        RETURN(-EBADF);
     }
+    RootFile *file = open_files[fileInfo->fh]->rootFile;
+
+    // collect info about how many and which blocks
+    // use to store data to be written
+
+    // number of blocks to write
+    int block_count;
+    if (size % BLOCK_SIZE == 0)
+        block_count = size / BLOCK_SIZE;
+    else
+        block_count = size / BLOCK_SIZE + 1;
+
+    // offset block for starting writing on existing files
+    int block_offset = offset / BLOCK_SIZE;
+    // if existing files is get bigger append to existing block
+    int delta_count_block = block_offset + block_count - file->stat.st_blocks;
+
+    // if we need new block
+    if (delta_count_block > 0) {
+        // create array of free blocks according to size of data
+        // mark blocks as used
+        int *new_blocks = dmap->get_amount_free_blocks(block_count);
+
+        // is file new or empty
+        if (file->firstBlock == -1)
+            file->firstBlock = new_blocks[0];
+        else {
+            // editing existing file
+            // append last block of file to new_blocks
+            int current_block = file->firstBlock;
+            // get end of chain
+            while (fat->get_next_block(current_block) != FAT_EOF)
+                current_block = fat->get_next_block(current_block);
+            fat->set_next_block(current_block, new_blocks[0]);
+        }
+
+        // store chain of blocks in FAT
+        for (int i = 1; i < block_count; i++)
+            fat->set_next_block(new_blocks[i - 1], new_blocks[i]);
+
+        delete[] new_blocks;
+        file->stat.st_blocks = block_count + block_offset;
+    }
+
+    // write size of new file
+    if ((off_t)(offset + size) > file->stat.st_size)
+        file->stat.st_size = offset + size;
+
+    int current_block = file->firstBlock;
+
+    // move to offset in case of writing to existing file
+    for (int i = 1; i <= block_offset; i++) {
+        int next_block_index = fat->get_next_block(current_block);
+        if (next_block_index != FAT_EOF)
+            current_block = next_block_index;
+    }
+
+    // collect block for writing
+    int *blocks = new int[block_count];
+    blocks[0] = current_block;
+    for (int i = 1; i < delta_count_block; i++) {
+        current_block = fat->get_next_block(current_block);
+        blocks[i] = current_block;
+    }
+
+    // pass in function to write blocks
+    int written = write_file(blocks, block_count, offset % BLOCK_SIZE, size, buf, open_files[fileInfo->fh]);
+
+    if (written != 0) {
+        RETURN(-EIO);
+    }
+
+    // set new timestamps
+    file->stat.st_mtime = time(nullptr);
+    file->stat.st_ctime = time(nullptr);
+
+    // save on disk
+    dmap->save_on_disk();
+    fat->save_on_disk();
+    rootDir->save_on_disk(file);
+
+    LOG("File was written.");
+    RETURN(size);
 }
 
 /// @brief Close a file.
@@ -518,17 +472,12 @@ int MyOnDiskFS::fuseWrite(const char *path, const char *buf, size_t size, off_t 
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseRelease(const char *path, struct fuse_file_info *fileInfo) {
     LOGM();
-    try {
-        int open_file_index = fileInfo->fh;
-        delete open_files[open_file_index];
-        open_files[open_file_index] = nullptr;
-        open_files_count--;
+    int open_file_index = fileInfo->fh;
+    delete open_files[open_file_index];
+    open_files[open_file_index] = nullptr;
+    open_files_count--;
 
-        RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
-    }
+    RETURN(0);
 }
 
 /// @brief Truncate a file.
@@ -541,34 +490,29 @@ int MyOnDiskFS::fuseRelease(const char *path, struct fuse_file_info *fileInfo) {
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseTruncate(const char *path, off_t newSize) {
     LOGM();
-    try {
-        // if new size is 0 truncate removes file
+    // if new size is 0 truncate removes file
 
-        // truncate 'only' works because fuseWrite is called by fuse afterwards.
-        // fuseTruncate basically just takes care of the fat/dmap handling after removing/adding more data
-        struct fuse_file_info fileInfo = {};
+    // truncate 'only' works because fuseWrite is called by fuse afterwards.
+    // fuseTruncate basically just takes care of the fat/dmap handling after removing/adding more data
+    struct fuse_file_info fileInfo = {};
 
-        // open the file: return errno - or - 0 if successful
-        int ret = fuseOpen(path, &fileInfo);
+    // open the file: return errno - or - 0 if successful
+    int ret = fuseOpen(path, &fileInfo);
 
-        if (ret != 0) {
-            RETURN(ret);
-        }
-        // resize file
-        ret = fuseTruncate(path, newSize, &fileInfo);
-
-        if (ret != 0) {
-            RETURN(ret);
-        }
-        // Close opened file
-        ret = fuseRelease(path, &fileInfo);
-        // Return final error code - or - 0 on success
-        LOG("File was truncated.");
+    if (ret != 0) {
         RETURN(ret);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
     }
+    // resize file
+    ret = fuseTruncate(path, newSize, &fileInfo);
+
+    if (ret != 0) {
+        RETURN(ret);
+    }
+    // Close opened file
+    ret = fuseRelease(path, &fileInfo);
+    // Return final error code - or - 0 on success
+    LOG("File was truncated.");
+    RETURN(ret);
 }
 
 /// @brief Truncate a file.
@@ -583,75 +527,69 @@ int MyOnDiskFS::fuseTruncate(const char *path, off_t newSize) {
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseTruncate(const char *path, off_t newSize, struct fuse_file_info *fileInfo) {
     LOGM();
-    try {
-
-        // check if correct file is opened
-        if (open_files[fileInfo->fh] == nullptr) {
-            RETURN(-EBADF);
-        }
-        // put file information in rootFile structure
-        RootFile *file = open_files[fileInfo->fh]->rootFile;
-
-        // if file size is not changed return 0
-        if (file->stat.st_size == newSize) {
-            RETURN(0);
-        }
-
-        uint32_t block_count;
-        // count required amount of blocks
-        if (newSize % BLOCK_SIZE == 0)
-            block_count = newSize / BLOCK_SIZE;
-        else
-            block_count = newSize / BLOCK_SIZE + 1;
-
-        // count the difference in blocks (to be removed later on)
-        uint32_t delta_block = file->stat.st_blocks - block_count;
-
-        // should always be >= 1 unless we are wiping file
-        if (delta_block > 0) {
-
-            uint32_t offset_block = file->stat.st_blocks - delta_block;
-            int32_t current_block = file->firstBlock;
-
-            // move to offset block
-            for (size_t i = 1; i < offset_block; i++) {
-                current_block = fat->get_next_block(current_block);
-            }
-
-            int32_t next_block = fat->get_next_block(current_block);
-
-            // go through dmap and fat chain and set them all to unused
-            while (next_block != FAT_EOF) {
-                fat->free_block(current_block);
-                dmap->set_block_state(next_block, false);
-                current_block = next_block;
-                next_block = fat->get_next_block(current_block);
-            }
-
-            if (block_count == 0) {
-                // if file was truncated to zero starting block was not freed yet
-                dmap->set_block_state(file->firstBlock, false);
-                file->firstBlock = -1;
-            }
-            file->stat.st_blocks = block_count;
-        }
-
-        // metadata
-        file->stat.st_size = newSize;
-        file->stat.st_mtime = time(nullptr);
-        file->stat.st_ctime = time(nullptr);
-
-        // save on disk
-        dmap->save_on_disk();
-        fat->save_on_disk();
-        rootDir->save_on_disk(file);
-
-        LOG("File was truncated.");
-        RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
+    // check if correct file is opened
+    if (open_files[fileInfo->fh] == nullptr) {
+        RETURN(-EBADF);
     }
+    // put file information in rootFile structure
+    RootFile *file = open_files[fileInfo->fh]->rootFile;
+
+    // if file size is not changed return 0
+    if (file->stat.st_size == newSize) {
+        RETURN(0);
+    }
+
+    uint32_t block_count;
+    // count required amount of blocks
+    if (newSize % BLOCK_SIZE == 0)
+        block_count = newSize / BLOCK_SIZE;
+    else
+        block_count = newSize / BLOCK_SIZE + 1;
+
+    // count the difference in blocks (to be removed later on)
+    uint32_t delta_block = file->stat.st_blocks - block_count;
+
+    // should always be >= 1 unless we are wiping file
+    if (delta_block > 0) {
+
+        uint32_t offset_block = file->stat.st_blocks - delta_block;
+        int32_t current_block = file->firstBlock;
+
+        // move to offset block
+        for (uint32_t i = 1; i < offset_block; i++) {
+            current_block = fat->get_next_block(current_block);
+        }
+
+        int32_t next_block = fat->get_next_block(current_block);
+
+        // go through dmap and fat chain and set them all to unused
+        while (next_block != FAT_EOF) {
+            fat->free_block(current_block);
+            dmap->set_block_state(next_block, false);
+            current_block = next_block;
+            next_block = fat->get_next_block(current_block);
+        }
+
+        if (block_count == 0) {
+            // if file was truncated to zero starting block was not freed yet
+            dmap->set_block_state(file->firstBlock, false);
+            file->firstBlock = -1;
+        }
+        file->stat.st_blocks = block_count;
+    }
+
+    // metadata
+    file->stat.st_size = newSize;
+    file->stat.st_mtime = time(nullptr);
+    file->stat.st_ctime = time(nullptr);
+
+    // save on disk
+    dmap->save_on_disk();
+    fat->save_on_disk();
+    rootDir->save_on_disk(file);
+
+    LOG("File was truncated.");
+    RETURN(0);
 }
 
 /// @brief Read a directory.
@@ -666,26 +604,21 @@ int MyOnDiskFS::fuseTruncate(const char *path, off_t newSize, struct fuse_file_i
 /// \return 0 on success, -ERRNO on failure.
 int MyOnDiskFS::fuseReaddir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offset, struct fuse_file_info *fileInfo) {
     LOGM();
-    try {
-        // Dir self reference
-        filler(buf, ".", nullptr, 0);
-        // Parent dir reference
-        filler(buf, "..", nullptr, 0);
+    // Dir self reference
+    filler(buf, ".", nullptr, 0);
+    // Parent dir reference
+    filler(buf, "..", nullptr, 0);
 
-        // Since we have one root directory we do not have to check for a directory
-        RootFile **files = rootDir->get_files();
-        for (size_t i = 0; i < NUM_DIR_ENTRIES; i++) {
-            if(files[i] != nullptr) {
-                struct stat s = {};
-                fuseGetattr(files[i]->name, &s);
-                filler(buf, files[i]->name, &s, 0);
-            }
+    // Since we have one root directory we do not have to check for a directory
+    RootFile **files = rootDir->get_files();
+    for (int i = 0; i < NUM_DIR_ENTRIES; i++) {
+        if(files[i] != nullptr) {
+            struct stat s = {};
+            fuseGetattr(files[i]->name, &s);
+            filler(buf, files[i]->name, &s, 0);
         }
-        RETURN(0);
-    } catch (const std::exception& e) {
-        LOGF("Problem occurred: %s\n", e.what());
-        RETURN(-ENOSYS);
     }
+    RETURN(0);
 }
 
 /// Initialize a file system.
@@ -710,10 +643,16 @@ void* MyOnDiskFS::fuseInit(struct fuse_conn_info *conn) {
 
         int ret= this->blockDevice->open(((MyFsInfo *) fuse_get_context()->private_data)->contFile);
 
+        for (int i = 0; i < NUM_OPEN_FILES; i++) {
+            open_files[i] = nullptr;
+        }
+
         if(ret >= 0) {
             LOG("Container file does exist, reading");
 
-            // TODO: [PART 2] Read existing structures form file
+            dmap->init_dmap();
+            fat->init_fat();
+            rootDir->init_root_dir();
 
         } else if(ret == -ENOENT) {
             LOG("Container file does not exist, creating a new one");
@@ -721,30 +660,17 @@ void* MyOnDiskFS::fuseInit(struct fuse_conn_info *conn) {
             ret = this->blockDevice->create(((MyFsInfo *) fuse_get_context()->private_data)->contFile);
 
             if (ret >= 0) {
-                LOG("Container file exists, reading...");
-
-                dmap->init_dmap();
-                fat->init_fat();
-                rootDir->init_root_dir();
-            } else if(ret == -ENOENT) {
-                LOG("Container file does not exist, creating a new one...");
-
-                ret = this->blockDevice->create(((MyFsInfo *)fuse_get_context()->private_data)->contFile);
-
-                if (ret >= 0) {
-                    dmap->first_init_dmap();
-                    fat->first_init_fat();
-                    rootDir->first_init_root_dir();
-                }
+                dmap->first_init_dmap();
+                fat->first_init_fat();
+                rootDir->first_init_root_dir();
             }
         }
-
         if(ret < 0) {
             LOGF("ERROR: Access to container file failed with error %d", ret);
         }
-     }
+    }
 
-    RETURN(NULL);
+    RETURN(0);
 }
 
 /// @brief Clean up a file system.
@@ -767,8 +693,8 @@ void MyOnDiskFS::SetInstance() {
 
 /// @brief Check if the next index in the File-block is open.
 int MyOnDiskFS::get_next_free_index_opened_files() {
-    for (int i = 0; i < NUM_OPEN_FILES; i++)
-    {
+
+    for (int i = 0; i < NUM_OPEN_FILES; i++) {
         if (open_files[i] == nullptr)
         {
             return i;
@@ -785,7 +711,7 @@ int MyOnDiskFS::get_next_free_index_opened_files() {
 /// @param [open_file] block cache of opened file
 /// @brief Method to read file from disk
 /// @return 0 on success, -1 on failure
-int MyOnDiskFS::read_file(int *blocks, int block_count, int offset, size_t size, char *buffer, BlockCache *open_file) {
+int MyOnDiskFS::read_file(int *blocks, int block_count, int offset, size_t size, char *buf, BlockCache *open_file) {
 
     // Read all blocks by block counter
     for (int i = 0; i < block_count; i++)
@@ -811,14 +737,14 @@ int MyOnDiskFS::read_file(int *blocks, int block_count, int offset, size_t size,
             else
                 tmp_size = BLOCK_SIZE - offset;
 
-            memcpy(buffer, this->buffer + offset, size);
+            memcpy(buf, this->buffer + offset, size);
         } else {
             // if remaining data fits in one block
             if (size < BLOCK_SIZE)
                 tmp_size = size;
             else
                 tmp_size = BLOCK_SIZE;
-            memcpy(buffer + buffer_offset, this->buffer, tmp_size);
+            memcpy(buf + buffer_offset, this->buffer, tmp_size);
         }
         // update remaining bytes to read
         size -= tmp_size;
@@ -845,16 +771,16 @@ int MyOnDiskFS::read_file(int *blocks, int block_count, int offset, size_t size,
 /// @param [open_file] block cache of opened file
 /// @brief Method to write file on disk
 /// @return 0 on success, -1 on failure
-int MyOnDiskFS::write_file(int *blocks, int block_count, int offset, size_t size, char *buffer, BlockCache *open_file) {
+int MyOnDiskFS::write_file(int *blocks, int block_count, int offset, size_t size, const char *buf, BlockCache *open_file) {
 
     // write all blocks by counter
-    for (size_t i = 0; i < block_count; i++) {
-        memset(this->buffer, 0, BLOCK_SIZE);
+    for (int i = 0; i < block_count; i++) {
+        memset(buffer, 0, BLOCK_SIZE);
         // put already given data inside block into buffer
         if (i == 0 && open_file->write_cache_block == (int32_t) blocks[i]) {
-            memcpy(this->buffer, open_file->write_cache, BLOCK_SIZE);
+            memcpy(buffer, open_file->write_cache, BLOCK_SIZE);
         } else {
-            blockDevice->read(DATA_OFFSET + blocks[i], this->buffer);
+            blockDevice->read(DATA_OFFSET + blocks[i], buffer);
         }
 
         size_t buffer_offset = i * BLOCK_SIZE;
@@ -868,14 +794,14 @@ int MyOnDiskFS::write_file(int *blocks, int block_count, int offset, size_t size
             else
                 tmp_size = BLOCK_SIZE - offset;
             // remaining space in this block
-            memcpy(this->buffer + offset, buffer, tmp_size);
+            memcpy(buffer + offset, buf, tmp_size);
         } else {
             // if remaining data is smaller than BLOCK_SIZE
             if (size < BLOCK_SIZE)
                 tmp_size = size;
             else
                 tmp_size = BLOCK_SIZE;
-            memcpy(this->buffer, buffer + buffer_offset, tmp_size);
+            memcpy(buffer, buf + buffer_offset, tmp_size);
         }
 
         // store new size
@@ -884,10 +810,10 @@ int MyOnDiskFS::write_file(int *blocks, int block_count, int offset, size_t size
         // last block
         if (i == block_count - 1) {
             open_file->write_cache_block = blocks[i];
-            memcpy(open_file->write_cache, this->buffer, BLOCK_SIZE);
+            memcpy(open_file->write_cache, buffer, BLOCK_SIZE);
         }
 
-        blockDevice->write(blocks[i] + DATA_OFFSET, this->buffer);
+        blockDevice->write(blocks[i] + DATA_OFFSET, buffer);
     }
-    RETURN(0);
+    return 0;
 }

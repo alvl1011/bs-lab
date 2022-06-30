@@ -8,8 +8,8 @@
 /// @param device
 RootDir::RootDir(BlockDevice *blockDevice) {
     this->blockDevice = blockDevice;
-    for(auto & existing_file : existing_files)
-        existing_file = nullptr;
+    for(int i = 0; i < NUM_DIR_ENTRIES; i++)
+        existing_files[i] = nullptr;
 }
 
 /// @brief RootDir destructor
@@ -18,17 +18,17 @@ RootDir::~RootDir() = default;
 /// @brief Create file
 /// @param path
 /// @return RootFile*
-RootFile* RootDir::create_file(const char *path, mode_t mode = S_IFREG | 0644) {
+RootFile* RootDir::create_file(const char *path) {
     path++;// due to slash
 
     int index = 0;
     while (existing_files[index] != nullptr)
         index++;
 
-    auto *file = new RootFile();
+    RootFile *file = new RootFile();
 
     strcpy(file->name, path);
-    file->stat.st_mode = mode;
+    file->stat.st_mode = S_IFREG | 0644;
     file->stat.st_blksize = BLOCK_SIZE;
     file->stat.st_size = 0;
     file->stat.st_blocks = 0;
@@ -65,11 +65,11 @@ void RootDir::delete_file(RootFile *file) {
 RootFile* RootDir::get_file(const char *path) {
     path++; // due to slash
 
-    for(auto & existing_file : existing_files) {
-        if(existing_file != nullptr && strcmp(path, existing_file->name) == 0)
-            return existing_file;
+    for(int i = 0; i < NUM_DIR_ENTRIES; i++) {
+        if(existing_files[i] != nullptr && strcmp(path, existing_files[i]->name) == 0)
+            return existing_files[i];
     }
-    return nullptr;
+    return nullptr; // if not found
 }
 
 /// @brief Get all files
@@ -87,7 +87,7 @@ RootFile* RootDir::load(int index) {
     this->blockDevice->read(ROOT_DIR_OFFSET + index, buffer);
 
     if(!Utils::checkContent(buffer)) {
-        auto *file = new RootFile();
+        RootFile *file = new RootFile();
         memcpy(file, buffer, sizeof(RootFile));
         this->existing_files[index] = file;
         return file;
@@ -97,17 +97,18 @@ RootFile* RootDir::load(int index) {
 
 /// @brief Writes changes on disk
 /// @param file to be saved
-void RootDir::save_on_disk(RootFile *file) {
+bool RootDir::save_on_disk(RootFile *file) {
     char buffer[BLOCK_SIZE];
     memset(buffer, 0, BLOCK_SIZE);
     memcpy(buffer, file, sizeof(RootFile));
     this->blockDevice->write(ROOT_DIR_OFFSET + file->rootDirBlock, buffer);
+    return true;
 }
 
 /// @brief Load files after opening an EXISTING file container
 void RootDir::init_root_dir() {
     for(int i = 0; i < NUM_DIR_ENTRIES; i++) {
-        RootFile * file = load(i);
+        RootFile *file = load(i);
         existing_files[i] = file;
         if(file != nullptr)
             existing_files_counter++;

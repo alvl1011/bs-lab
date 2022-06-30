@@ -89,16 +89,17 @@ void FAT::save_on_disk() {
         // watch from 0 to 512 iterations inside current blockDevice
         int current_iteration = 0;
         // write updated FAT, keep wathcing over the blockDevice offset
-        for (int index = ((BLOCK_SIZE / 4) * block_device_offset); index < BLOCK_SIZE + (BLOCK_SIZE * current_index); index++) {
+        for (int index = 0 + ((BLOCK_SIZE / 4) * block_device_offset);
+            index < BLOCK_SIZE + (BLOCK_SIZE * current_index); index++) {
 
             // if current_iteration matches modified block
             if(index == modifiedBlocks[i - 1]) {
                 // write each byte to buffer, start - left
                 for(int j = 3; j >= 0; j--) {
                     // write next block pointer
-                    int byte  = (current_index >> (8 * 1)) & 0xff;
+                    int current_byte  = (current_index >> (8 * j)) & 0xff;
                     int buffer_offset = (current_iteration * 4) + j;
-                    buffer[buffer_offset] = byte;
+                    buffer[buffer_offset] = current_byte;
                 }
                 break;
             }

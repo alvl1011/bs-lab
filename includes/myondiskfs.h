@@ -50,8 +50,8 @@ public:
     virtual void fuseDestroy();
 
     int get_next_free_index_opened_files();
-    int read_file(int *blocks, int block_count, int offset, size_t size, char *buffer, BlockCache *open_file);
-    int write_file(int *blocks, int block_count, int offset, size_t size, char *buffer, BlockCache *open_file);
+    int read_file(int *blocks, int block_count, int offset, size_t size, char *buf, BlockCache *open_file);
+    int write_file(int *blocks, int block_count, int offset, size_t size, const char *buffer, BlockCache *open_file);
 };
 
 #endif //MYFS_MYONDISKFS_H

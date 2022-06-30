@@ -40,28 +40,28 @@
 struct MyFsNode {
     char name[NAME_LENGTH]{};
     int size = 0;
-    uid_t uid{};
-    gid_t gid{};
+    uid_t uid;
+    gid_t gid;
     mode_t mode = S_IFREG | 0777;
-    char* data{};
-    time_t atime{}, ctime{}, mtime{};
+    char* data;
+    time_t atime, ctime, mtime;
 };
 
 // root block - one Block as struct to store metadata
 struct RootFile {
     char name[NAME_LENGTH]{};
     struct stat stat = {}; // store metadata
-    int firstBlock{}; // index of first data block
-    int rootDirBlock{}; // index of data block for metadata
+    int firstBlock; // index of first data block
+    int rootDirBlock; // index of data block for metadata
 };
 
 // Info on opened files
 struct BlockCache {
-    char read_cache[BLOCK_SIZE]{};
+    char read_cache[BLOCK_SIZE];
     uint32_t read_cache_block = -1;
-    char write_cache[BLOCK_SIZE]{};
+    char write_cache[BLOCK_SIZE];
     uint32_t write_cache_block = -1;
-    RootFile *rootFile{};
+    RootFile *rootFile;
 };
 
 

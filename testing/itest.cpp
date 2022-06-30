@@ -14,7 +14,7 @@
 #include "tools.hpp"
 
 #define FILENAME "file"
-#define SMALL_SIZE 1024
+#define SMALL_SIZE 15000
 #define LARGE_SIZE 20*1024*1024
 
 TEST_CASE("T-1.01", "[Part_1]") {

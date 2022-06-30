@@ -10,8 +10,8 @@
 
 DMAP::DMAP(BlockDevice *blockDevice) {
     this->blockDevice = blockDevice;
-    for (bool & block : this->blocks) {
-        block = false;
+    for (int i = 0; i < DATA_BLOCKS; i++) {
+        this->blocks[i] = false;
     }
 }
 
@@ -50,20 +50,32 @@ int* DMAP::get_amount_free_blocks(int amount) {
 
 /// @brief Set usage status of data block to true or false if in use or not
 
-void DMAP::set_block_state(size_t dataBlockNumber, bool isUsed) {
+void DMAP::set_block_state(int dataBlockNumber, bool isUsed) {
     this->blocks[dataBlockNumber] = isUsed;
-    if(isUsed) this->blockInUseCounter++;
-    else this->blockInUseCounter--;
+    if(isUsed) decrease_free_block_counter_by(1);
+    else increase_free_block_counter_by(1);
 }
 
 /// @brief Get the usage status of data block
 /// @return true|false
-bool DMAP::get_block_state(size_t dataBlockNumber) {
+bool DMAP::get_block_state(int dataBlockNumber) {
     return this->blocks[dataBlockNumber];
 }
 
+/// Increase the counter which keeps track of the total of free blocks by
+/// the requested amount
+void DMAP::increase_free_block_counter_by(int amount) {
+    this->blockInUseCounter += amount;
+}
+
+/// Decrease the counter which keeps track of the total of free blocks by
+/// the requested amount
+void DMAP::decrease_free_block_counter_by(int amount) {
+    this->blockInUseCounter -= amount;
+}
+
 /// @brief Write changes to disk
-void DMAP::save_on_disk() {
+bool DMAP::save_on_disk() {
     char buffer[BLOCK_SIZE];
 
     // for blocks which need to be stores with DMAP
@@ -79,12 +91,13 @@ void DMAP::save_on_disk() {
              * is within bounds
              * */
             if(blocks_track_index < DATA_BLOCKS)
-                buffer[byte_index] = (char) blocks[blocks_track_index];
+                buffer[byte_index] = blocks[blocks_track_index];
             else
                 buffer[byte_index] = 0;
         }
         this->blockDevice->write(DMAP_OFFSET + current_index, buffer);
     }
+    return true;
 }
 
 /// @brief Initialise the DMAP(existing) and check current available blocks
@@ -111,7 +124,7 @@ void DMAP::init_dmap() {
             if(blocks_index < DATA_BLOCKS) {
                 // init blocks array
                 this->blocks[blocks_index] = buffer[j];
-                if (buffer[j] == 1) this->blockInUseCounter--;
+                if (buffer[j] == 1) decrease_free_block_counter_by(1);
             }
         }
     }
